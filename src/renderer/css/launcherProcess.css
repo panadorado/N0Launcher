@@ -1,0 +1,80 @@
+/* ===== Progress bar (đã có phần lớn từ trước) ===== */
+#progress-container {
+  display: none;
+  /* ... các style khác giữ nguyên ... */
+}
+
+#progress-container.show {
+  display: block;
+}
+
+/* ===== Nút Play / Dừng tải ===== */
+/* #play-main-btn {
+  /* style cơ bản đã có */
+/* } */
+
+#play-main-btn.mode-cancel {
+  background-color: #dc2626; /* red-600 */
+}
+
+#play-main-btn.mode-cancel:hover {
+  background-color: #ef4444; /* red-500 */
+}
+
+#play-main-btn.mode-normal {
+  background-color: #16a34a; /* green-600 */
+}
+
+#play-main-btn.mode-normal:hover {
+  background-color: #22c55e; /* green-500 */
+}
+
+/* ===== Nút Auth (Sidebar) ===== */
+#auth-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: #d4d4d8;
+  font-weight: 500;
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#auth-btn:active {
+  transform: scale(0.98);
+}
+
+#auth-btn:focus {
+  outline: none;
+}
+
+#auth-btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.6);
+}
+
+/* Trạng thái Đăng nhập (xanh) */
+#auth-btn.mode-login:hover {
+  background-color: rgba(22, 163, 74, 0.9);
+  color: white;
+}
+
+#auth-btn.mode-login:focus-visible {
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.6);
+}
+
+/* Trạng thái Đăng xuất (đỏ) */
+#auth-btn.mode-logout:hover {
+  background-color: rgba(220, 38, 38, 0.9);
+  color: white;
+}
+
+#auth-btn.mode-logout:focus-visible {
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.6);
+}

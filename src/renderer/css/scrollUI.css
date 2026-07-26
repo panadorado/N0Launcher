@@ -1,0 +1,42 @@
+/* ===== Scrollbar nâng cao ===== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(63, 63, 70, 0.6);   /* zinc-700 mờ */
+  border-radius: 9999px;
+  transition: background-color 0.25s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #22c55e;                 /* xanh lá khi hover */
+}
+
+/* Khi đang kéo */
+*::-webkit-scrollbar-thumb:active {
+  background-color: #16a34a;                 /* xanh đậm hơn */
+}
+
+.sidebar::-webkit-scrollbar-thumb,
+.modal-box::-webkit-scrollbar-thumb,
+#content::-webkit-scrollbar-thumb {
+  background-color: #3f3f46;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.modal-box::-webkit-scrollbar-thumb:hover,
+#content::-webkit-scrollbar-thumb:hover {
+  background-color: #22c55e;
+}

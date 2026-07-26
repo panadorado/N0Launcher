@@ -1,0 +1,65 @@
+{
+  "name": "n0launcher",
+  "version": "1.0.1",
+  "author": "N0rach",
+  "description": "N0Launcher make with love Minecraft",
+  "private": true,
+  "main": "dist/main/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "obfuscate": "node scripts/obfuscate.js",
+    "build": "vite build && node scripts/build-main.js",
+    "pack": "npm run build && npm run obfuscate && electron-builder",
+    "pack:win": "npm run build && npm run obfuscate && electron-builder --win",
+    "start": "npm run build && npm run obfuscate && electron .",
+    "dev:mon": "npm run build && npm run obfuscate && nodemon --exec electron ."
+  },
+  "devDependencies": {
+    "electron": "^43.1.1",
+    "electron-builder": "^26.15.3",
+    "javascript-obfuscator": "^5.5.0",
+    "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "@xmcl/core": "2.15.1",
+    "@xmcl/installer": "^6.1.2",
+    "@xmcl/mod-parser": "^3.4.2",
+    "@xmcl/resourcepack": "^1.2.5",
+    "@xmcl/task": "^4.1.1",
+    "adm-zip": "^0.6.0",
+    "fs-extra": "^11.3.6",
+    "minecraft-launcher-core": "^3.18.2",
+    "msmc": "^5.0.5",
+    "undici": "7.2.3"
+  },
+  "build": {
+    "appId": "com.n0launcher",
+    "productName": "N0Launcher",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "!**/*.map",
+      "!dist/renderer/assets/*.js.map"
+    ],
+    "win": {
+      "icon": "src/renderer/assets/N0Launcher.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
+  "overrides": {
+    "undici": "7.2.3",
+    "@xmcl/core": "2.15.1"
+  }
+}

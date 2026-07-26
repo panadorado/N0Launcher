@@ -1,0 +1,320 @@
+/* ===== Trang Tài khoản / Đăng nhập ===== */
+
+.login-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem; /* p-6 */
+}
+
+.login-container {
+  width: 100%;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header */
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem; /* mb-10 */
+}
+
+.login-title {
+  font-size: 2.25rem; /* text-4xl */
+  font-weight: 800;
+  letter-spacing: -0.025em; /* tracking-tight */
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.login-underline {
+  height: 0.25rem; /* h-1 */
+  width: 5rem; /* w-20 */
+  background: linear-gradient(to right, #3b82f6, #a855f7, #10b981); /* from-blue-500 via-purple-500 to-emerald-500 */
+  border-radius: 9999px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-subtitle {
+  color: #a1a1aa; /* text-zinc-400 */
+  margin-top: 1rem;
+  font-size: 1.125rem; /* text-lg */
+}
+
+/* Cards Grid */
+.login-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem; /* gap-6 */
+}
+
+@media (min-width: 768px) {
+  .login-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Error Alert */
+#login-error {
+  display: none; /* hidden */
+  margin-top: 2rem;
+  max-width: 28rem; /* max-w-md */
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(69, 10, 10, 0.7); /* bg-red-950/70 */
+  border: 1px solid rgba(153, 27, 27, 0.5); /* border-red-800/50 */
+  border-radius: 1rem; /* rounded-2xl */
+  padding: 1rem 1.25rem; /* px-5 py-4 */
+  align-items: center;
+  gap: 0.75rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 25px -5px rgba(69, 10, 10, 0.3);
+}
+
+#login-error.show {
+  display: flex;
+}
+
+.login-error-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background-color: rgba(239, 68, 68, 0.2); /* bg-red-500/20 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #f87171; /* text-red-400 */
+}
+
+#login-error-text {
+  flex: 1;
+  color: #fee2e2; /* text-red-100 */
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.375;
+}
+
+.login-error-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f87171;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.login-error-close:hover {
+  color: #fecaca; /* hover:text-red-200 */
+  background-color: rgba(153, 27, 27, 0.5); /* hover:bg-red-800/50 */
+}
+
+/* ===== Login Cards ===== */
+
+.login-card {
+  position: relative;
+  padding: 2rem; /* p-8 */
+  background-color: rgba(24, 24, 27, 0.6); /* bg-zinc-900/60 */
+  border: 1px solid #27272a; /* border-zinc-800 */
+  border-radius: 1.5rem; /* rounded-3xl */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-0.25rem); /* hover:-translate-y-1 */
+}
+
+/* Gradient overlay (chung) */
+.login-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom right, transparent, transparent);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* Icon box */
+.login-card-icon {
+  position: relative;
+  width: 5rem; /* w-20 */
+  height: 5rem; /* h-20 */
+  border-radius: 1rem; /* rounded-2xl */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem; /* mb-5 */
+  transition: transform 0.3s ease;
+}
+
+.login-card:hover .login-card-icon {
+  transform: scale(1.05); /* group-hover:scale-105 */
+}
+
+.login-card-icon i {
+  font-size: 1.875rem; /* text-3xl */
+  color: white;
+}
+
+/* Title & description */
+.login-card-title {
+  position: relative;
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.login-card-desc {
+  position: relative;
+  color: #71717a; /* text-zinc-500 */
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+/* Input fields */
+.login-input {
+  position: relative;
+  width: 100%;
+  background-color: rgba(39, 39, 42, 0.8); /* bg-zinc-800/80 */
+  border: 1px solid #3f3f46; /* border-zinc-700 */
+  padding: 0.75rem; /* p-3 */
+  border-radius: 0.75rem; /* rounded-xl */
+  color: white;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.login-input::placeholder {
+  color: #52525b; /* placeholder:text-zinc-600 */
+}
+
+.login-input + .login-input {
+  margin-top: 0.75rem;
+}
+
+/* Button chung */
+.login-btn {
+  position: relative;
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem 1.5rem; /* px-6 py-4 */
+  border-radius: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ========== Microsoft (Blue) ========== */
+.login-card--microsoft:hover {
+  border-color: rgba(59, 130, 246, 0.5); /* hover:border-blue-500/50 */
+  box-shadow: 0 20px 25px -5px rgba(23, 37, 84, 0.3); /* hover:shadow-blue-950/30 */
+}
+
+.login-card--microsoft:hover .login-card-overlay {
+  background: linear-gradient(to bottom right, rgba(59, 130, 246, 0.1), transparent);
+}
+
+.login-card--microsoft .login-card-icon {
+  background: linear-gradient(to bottom right, #3b82f6, #4338ca); /* from-blue-500 to-indigo-700 */
+  box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.4); /* shadow-blue-900/40 */
+}
+
+.login-card--microsoft .login-btn {
+  background-color: #2563eb; /* bg-blue-600 */
+}
+
+.login-card--microsoft .login-btn:hover {
+  background-color: #3b82f6; /* hover:bg-blue-500 */
+  box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.5);
+}
+
+/* ========== Offline (Green) ========== */
+.login-card--offline:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 20px 25px -5px rgba(5, 46, 22, 0.3);
+}
+
+.login-card--offline:hover .login-card-overlay {
+  background: linear-gradient(to bottom right, rgba(34, 197, 94, 0.1), transparent);
+}
+
+.login-card--offline .login-card-icon {
+  background: linear-gradient(to bottom right, #22c55e, #047857); /* from-green-500 to-emerald-700 */
+  box-shadow: 0 10px 15px -3px rgba(20, 83, 45, 0.4);
+}
+
+.login-card--offline .login-input:focus {
+  border-color: #22c55e;
+}
+
+.login-card--offline .login-btn {
+  background-color: #16a34a; /* bg-green-600 */
+}
+
+.login-card--offline .login-btn:hover {
+  background-color: #22c55e;
+  box-shadow: 0 10px 15px -3px rgba(20, 83, 45, 0.5);
+}
+
+/* ========== Ely.by (Purple) ========== */
+.login-card--elyby:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 20px 25px -5px rgba(59, 7, 100, 0.3);
+}
+
+.login-card--elyby:hover .login-card-overlay {
+  background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.1), transparent);
+}
+
+.login-card--elyby .login-card-icon {
+  background: linear-gradient(to bottom right, #a855f7, #a21caf); /* from-purple-500 to-fuchsia-700 */
+  box-shadow: 0 10px 15px -3px rgba(88, 28, 135, 0.4);
+}
+
+.login-card--elyby .login-input:focus {
+  border-color: #a855f7;
+}
+
+.login-card--elyby .login-btn {
+  margin-top: 10px;
+  background-color: #9333ea; /* bg-purple-600 */
+}
+
+.login-card--elyby .login-btn:hover {
+  background-color: #a855f7;
+  box-shadow: 0 10px 15px -3px rgba(88, 28, 135, 0.5);
+}
+
+/* ===== Login Error Animation ===== */
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+
+#login-error.shake {
+  animation: shake 0.4s ease-in-out;
+}

@@ -1,0 +1,605 @@
+/* ===== Modal Cấu hình mới ===== */
+
+#new-profile-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 1.5rem;
+}
+
+#new-profile-modal.show {
+  display: flex;
+}
+
+.modal-box {
+  background-color: #18181b;
+  border: 1px solid #3f3f46;
+  border-radius: 1.5rem;
+  width: 100%;
+  max-width: 42rem; /* max-w-2xl */
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid #27272a;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-title i {
+  color: #4ade80;
+}
+
+.modal-close-btn {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-close-btn:hover {
+  background-color: #27272a;
+}
+
+/* Tabs */
+.modal-tabs {
+  display: flex;
+  padding: 1rem 1.5rem 0;
+  gap: 0.25rem;
+  border-bottom: 1px solid #27272a;
+}
+
+.profile-tab-btn {
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem 0.75rem 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.profile-tab-btn:hover {
+  color: #ffffff;
+}
+
+.profile-tab-btn.active {
+  color: #ffffff;
+  border-bottom-color: #22c55e;
+}
+
+/* Body */
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #71717a;
+  margin-bottom: 0.5rem;
+}
+
+#new-profile-name {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: white;
+  outline: none;
+}
+
+#new-profile-name:focus {
+  border-color: #22c55e;
+}
+
+/* Loader panels */
+.loader-panel {
+  display: none;
+}
+
+.loader-panel.show {
+  display: block;
+}
+
+.panel-box {
+  padding: 1.25rem;
+  border-radius: 1rem;
+}
+
+.panel-desc {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panel-checkboxes {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.panel-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.panel-checkbox-label input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.panel-select-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-bottom: 0.25rem;
+}
+
+.panel-select {
+  width: 100%;
+  background-color: #18181b;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: white;
+  outline: none;
+}
+
+.panel-select + .panel-select-label {
+  margin-top: 1rem;
+}
+
+/* Theme colors for panels */
+.panel-vanilla {
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.panel-vanilla .panel-desc {
+  color: #86efac;
+}
+
+.panel-vanilla input[type="checkbox"] {
+  accent-color: #22c55e;
+}
+
+.panel-forge {
+  border: 1px solid rgba(113, 113, 122, 0.3);
+  background-color: rgba(63, 63, 70, 0.2);
+}
+
+.panel-forge .panel-desc {
+  color: #d4d4d8;
+}
+
+.panel-neoforge {
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  background-color: rgba(249, 115, 22, 0.05);
+}
+
+.panel-neoforge .panel-desc {
+  color: #fdba74;
+}
+
+.panel-fabric {
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  background-color: rgba(6, 182, 212, 0.05);
+}
+
+.panel-fabric .panel-desc {
+  color: #67e8f9;
+}
+
+/* Error */
+#new-profile-error {
+  display: none;
+  font-size: 0.875rem;
+  color: #f87171;
+  margin-top: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#new-profile-error.show {
+  display: flex;
+}
+
+/* Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 1px solid #27272a;
+}
+
+.btn-cancel {
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-cancel:hover {
+  color: #ffffff;
+}
+
+.btn-create {
+  padding: 0.625rem 1.5rem;
+  background-color: #16a34a;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-create:hover {
+  background-color: #22c55e;
+}
+
+/* ===== Trang Mods & Resource Packs ===== */
+
+.mods-page {
+  margin-top: 2rem;
+  max-width: 56rem; /* max-w-4xl */
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+.mods-empty {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #71717a;
+  gap: 0.75rem;
+}
+
+.mods-empty .title {
+  font-weight: 600;
+  color: #a1a1aa;
+}
+
+.mods-empty .desc {
+  font-size: 0.875rem;
+}
+
+/* Header toolbar */
+.mods-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+#mods-profile-select {
+  background-color: #27272a;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  color: white;
+  min-width: 14rem;
+  outline: none;
+}
+
+.btn-open-mods-folder {
+  padding: 0.625rem 1rem;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-open-mods-folder:hover {
+  border-color: #06b6d4;
+  color: #22d3ee;
+}
+
+/* Section cards */
+.mods-section {
+  border-radius: 1rem;
+  border: 1px solid rgba(63, 63, 70, 0.5);
+  background-color: rgba(39, 39, 42, 0.4);
+  overflow: hidden;
+}
+
+.mods-section-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #27272a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mods-section-title {
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mods-section-title .icon-mods {
+  color: #22d3ee; /* text-cyan-400 */
+}
+
+.mods-section-title .icon-packs {
+  color: #c084fc; /* text-purple-400 */
+}
+
+/* Empty text inside section */
+.mods-empty-text {
+  font-size: 0.875rem;
+  color: #71717a;
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.mods-empty-text code {
+  color: #a1a1aa;
+}
+
+/* ===== Mod Row ===== */
+.mod-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #27272a;
+}
+
+.mod-row:last-child {
+  border-bottom: none;
+}
+
+.mod-row.disabled {
+  opacity: 0.5;
+}
+
+.mod-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.mod-name {
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mod-version {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #71717a;
+}
+
+.mod-file {
+  font-size: 0.75rem;
+  color: #71717a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mod-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Toggle switch */
+.mod-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.mod-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mod-toggle-track {
+  width: 2.25rem;
+  height: 1.25rem;
+  background-color: #3f3f46;
+  border-radius: 9999px;
+  transition: background-color 0.2s;
+}
+
+.mod-toggle input:checked + .mod-toggle-track {
+  background-color: #16a34a;
+}
+
+.mod-toggle-thumb {
+  position: absolute;
+  left: 0.125rem;
+  top: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border-radius: 9999px;
+  transition: transform 0.2s;
+}
+
+.mod-toggle input:checked ~ .mod-toggle-thumb {
+  transform: translateX(1rem);
+}
+
+/* Delete button */
+.btn-delete-mod {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  color: #71717a;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.btn-delete-mod:hover {
+  color: #f87171;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* ===== Resource Pack Card ===== */
+.pack-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #27272a;
+}
+
+.pack-row:last-child {
+  border-bottom: none;
+}
+
+.pack-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  border: 1px solid #3f3f46;
+}
+
+.pack-icon-placeholder {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: 1px solid #3f3f46;
+  background-color: #27272a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #71717a;
+}
+
+.pack-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.pack-name {
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pack-desc {
+  font-size: 0.75rem;
+  color: #71717a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Warning icon cho mod không nhận diện được */
+.mod-warning {
+  color: #eab308; /* yellow-500 */
+  font-size: 0.75rem;
+}
+
+/* Icon lớn ở empty state */
+.icon-xl {
+  font-size: 1.875rem; /* text-3xl */
+}
+
+/* Khoảng cách giữa 2 section */
+.mods-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}

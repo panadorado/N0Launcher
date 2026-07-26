@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="./assets/icon.ico" />
+  <link href="./css/styles.css" rel="stylesheet">
+  <!-- <link href="./src/style.css" rel="stylesheet"> -->
+  <title>N0Launcher</title>
+</head>
+<body class="launcher-body">
+  <div class="flex-screen">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      
+      <div id="auth-header">
+        <button id="auth-btn">
+          <i id="auth-icon" class="fas fa-user"></i>
+          <span>Đăng nhập</span>
+        </button>
+      </div>
+      
+      <nav class="nav">
+        <button onclick="showPage('home')" class="nav-btn active">
+          <i class="fas fa-home"></i> Trang chủ
+        </button>
+        <button onclick="showPage('versions')" class="nav-btn">
+          <i class="fas fa-list"></i> Phiên bản
+        </button>
+        <button onclick="showPage('mods')" class="nav-btn">
+          <i class="fas fa-puzzle-piece"></i> Mods &amp; Resource Packs
+        </button>
+        <button onclick="showPage('settings')" class="nav-btn">
+          <i class="fas fa-cog"></i> Cài đặt
+        </button>
+      </nav>
+
+      <div class="mt-auto"></div>
+
+      <!-- Footer Version -->
+      <div class="sidebar-footer">
+        N0Launcher <span class="version">v1.0.0</span><br>
+        <span class="credit">Made with ❤️ for Minecraft</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="content">
+      <!-- Trang chủ sẽ có background Minecraft -->
+    </div>
+  </div>
+
+  <!-- Thanh tiến trình -->
+  <div id="progress-container">
+    <div class="progress-header">
+      <span id="progress-label">Đang chuẩn bị...</span>
+      <span id="progress-percent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
