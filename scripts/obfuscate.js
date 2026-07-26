@@ -28,8 +28,7 @@ const foldersToObfuscate = [
     { path: '../dist/renderer/assets', name: 'renderer' },   // Obfuscate mạnh
     { path: '../dist/core', name: 'core' },                   // Obfuscate vừa
     { path: '../dist/utils', name: 'utils' },
-    // { path: '../dist/main', name: 'main' },                // Không obfuscate main (an toàn nhất)
-    // { path: '../dist/preload', name: 'preload' },         // Không obfuscate preload
+    { path: '../dist/main', name: 'main' },
 ];
 
 async function obfuscateFolder(folderPath, folderName) {

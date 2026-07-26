@@ -1,3 +1,4 @@
+const { app } = require('electron');
 const { Client } = require('minecraft-launcher-core');
 const { execFile } = require('child_process');
 const fs = require('fs');
@@ -16,6 +17,7 @@ const launcher = new Client();
 // ensureAuthlibInjector/buildAuthlibInjectorArg bên dưới).
 const AUTHLIB_INJECTOR_API  = 'https://api.github.com/repos/yushijinhun/authlib-injector/releases/latest';
 const ELYBY_AUTH_SERVER     = 'https://authserver.ely.by';
+const ELYBY_SYST_SERVER     = 'http://skinsystem.ely.by';
 const INJECTOR_JAR_NAME     = 'authlib-injector.jar';
 
 const MODDED_JVM_COMPAT_ARGS = [
@@ -315,31 +317,33 @@ async function launchGame(account, profileId, onProgress = () => {}) {
   }
 
   const versionTypeForLaunch = profile.loader === 'vanilla' ? (profile.versionType === 'snapshot' ? 'snapshot' : 'release') : 'release';
-  const LOADERS_USING_AUTHLIB_INJECTOR = ['vanilla'];
 
-  let customArgs;
+  let customArgs = [];
+
+  if(!profile.loader !== 'vanilla') {
+    customArgs.push(...MODDED_JVM_COMPAT_ARGS);
+    customArgs.push(`-DlibraryDirectory=${path.join(gameDir, 'libraries')}`);
+  }
+
   if (account?.meta?.type === 'elyby') {
-    if (LOADERS_USING_AUTHLIB_INJECTOR.includes(profile.loader)) {
-      try {
-        const injectorPath = await ensureAuthlibInjector(gameDir);
-        customArgs = [
-          `-javaagent:${injectorPath}=${ELYBY_AUTH_SERVER}`,
-          `-Dauthlibinjector.yggdrasil.authserver=${ELYBY_AUTH_SERVER}`,
-          `-Dauthlibinjector.yggdrasil.api=${ELYBY_AUTH_SERVER}`,
-          `-Dauthlibinjector.skin.host=http://skinsystem.ely.by`,
-          `-Dminecraft.accessToken=${account?.access_token}`,
-          `-Dminecraft.uuid=${account?.uuid?.replace(/-/g, '')}`,
-          `-Dminecraft.username=${account?.name}`,
-        ];
-      } catch (e) {
-        console.error('[launcher] Không thể chuẩn bị authlib-injector cho ely.by:', e.message);
-        throw new Error(`Không thể chuẩn bị xác thực ely.by (authlib-injector): ${e.message}. Vui lòng kiểm tra kết nối mạng rồi thử lại.`);
-      }
-    } else {
-      customArgs = [
-        ...MODDED_JVM_COMPAT_ARGS,
-        `-DlibraryDirectory=${path.join(gameDir, 'libraries')}`,
-      ];
+    try {
+
+      const userDataDir = app.getPath('userData');
+      const injectorPath = await ensureAuthlibInjector(userDataDir);
+
+      customArgs.push(
+        `-javaagent:${injectorPath}=${ELYBY_AUTH_SERVER}`,
+        `-Dauthlibinjector.yggdrasil.authserver=${ELYBY_AUTH_SERVER}`,
+        `-Dauthlibinjector.yggdrasil.api=${ELYBY_AUTH_SERVER}`,
+        `-Dauthlibinjector.skin.host=${ELYBY_SYST_SERVER}`,
+        `-Dminecraft.accessToken=${account?.access_token}`,
+        `-Dminecraft.uuid=${account?.uuid?.replace(/-/g, '')}`,
+        `-Dminecraft.username=${account?.name}`
+      );
+
+    } catch (e) {
+      console.error('[launcher] Không thể chuẩn bị authlib-injector cho ely.by:', e.message);
+      throw new Error(`Không thể chuẩn bị xác thực ely.by (authlib-injector): ${e.message}. Vui lòng kiểm tra kết nối mạng rồi thử lại.`);
     }
   }
 

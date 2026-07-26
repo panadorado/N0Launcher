@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const { registerIpcHandlers } = require('./ipc');
+const { registerIpcHandlers } = require('../controller/ipc');
 const path = require('path');
 
 // ====================== KHỞI TẠO LOGGER ======================
@@ -66,34 +66,49 @@ function setupRendererLogging(win) {
   });
 }
 
-let mainWindow;
+// Yêu cầu khóa single instance
+const gotTheLock = app.requestSingleInstanceLock();
 
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 798,
-    minWidth: 1280,
-    minHeight: 798,
-    autoHideMenuBar: true,
-    webPreferences: {
-      devTools: false,
-      preload: path.join(__dirname, '../preload/index.js'),
-      nodeIntegration: false,
-      contextIsolation: true
-    },
-    icon: path.join(__dirname, '../assets/N0Launcher.png')
+if (!gotTheLock) {
+  app.quit();
+} else {
+  // Khi người dùng cố mở instance thứ 2
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Focus cửa sổ chính nếu đã mở
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
+    }
   });
 
-  mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
-  // mainWindow.webContents.openDevTools();
+  let mainWindow; 
+  function createWindow() {
+    mainWindow = new BrowserWindow({
+      width: 1280,
+      height: 798,
+      minWidth: 1280,
+      minHeight: 798,
+      autoHideMenuBar: true,
+      webPreferences: {
+        devTools: false,
+        preload: path.join(__dirname, '../preload/index.js'),
+        nodeIntegration: false,
+        contextIsolation: true
+      },
+      icon: path.join(__dirname, '../assets/N0Launcher.png')
+    });
+
+    mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
+    // mainWindow.webContents.openDevTools();
+  }
+
+  app.whenReady().then(() => {
+    createWindow();
+    registerIpcHandlers(mainWindow);
+    setupRendererLogging(mainWindow);
+  });
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+  });
 }
-
-app.whenReady().then(() => {
-  createWindow();
-  registerIpcHandlers(mainWindow);
-  setupRendererLogging(mainWindow);
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});

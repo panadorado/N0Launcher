@@ -6,7 +6,10 @@ export function renderLogin(currentAccount, auth) {
         
         <!-- Header -->
         <div class="login-header">
-          <h2 class="login-title">Tài khoản</h2>
+          <h2 class="login-title">
+            <i class="fas fa-user"></i>
+            Tài khoản
+          </h2>
           <div class="login-underline"></div>
           <p class="login-subtitle">Chọn cách đăng nhập để bắt đầu chơi</p>
         </div>

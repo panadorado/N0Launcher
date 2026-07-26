@@ -19,8 +19,7 @@ function renderModRow(profileId, mod) {
       </div>
       <div class="mod-actions">
         <label class="mod-toggle" title="${mod.enabled ? 'Tắt mod' : 'Bật mod'}">
-          <input type="checkbox" ${mod.enabled ? 'checked' : ''}
-                 onchange="window.toggleModUI('${profileId}', '${mod.file}', this.checked)" />
+          <input type="checkbox" ${mod.enabled ? 'checked' : ''} onchange="window.toggleModUI('${profileId}', '${mod.file}', this.checked)" />
           <div class="mod-toggle-track"></div>
           <div class="mod-toggle-thumb"></div>
         </label>
@@ -99,15 +98,28 @@ export function renderMods(profiles, selectedProfileId, bodyHtml) {
 
   return `
     <div class="mods-page">
-      <div class="mods-toolbar">
-        <select id="mods-profile-select" onchange="window.onModsProfileChange(this.value)">
-          ${options}
-        </select>
-        <button onclick="window.openModsFolderUI('${activeId}')" class="btn-open-mods-folder">
-          <i class="fas fa-folder-open"></i> Mở thư mục mods
-        </button>
+      <div class="mods-container">
+        <!-- Header -->
+        <div class="mods-header">
+          <h2 class="mods-title">
+            <i class="fa-solid fa-puzzle-piece"></i>
+            Mods và ResourcePacks
+          </h2>
+          <div class="mods-underline"></div>
+          <p class="mods-subtitle">Quản lý mods và resourcepacks của từng phiên bản</p>
+        </div>
+        <!-- ------ -->
+
+        <div class="mods-toolbar">
+          <select id="mods-profile-select" onchange="window.onModsProfileChange(this.value)">
+            ${options}
+          </select>
+          <button onclick="window.openModsFolderUI('${activeId}')" class="btn-open-mods-folder">
+            <i class="fas fa-folder-open"></i> Mở thư mục mods
+          </button>
+        </div>
+        <div id="mods-content">${bodyHtml}</div>
       </div>
-      <div id="mods-content">${bodyHtml}</div>
     </div>
   `;
 }

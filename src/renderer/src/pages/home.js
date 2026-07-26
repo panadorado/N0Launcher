@@ -9,8 +9,6 @@
 export function typeAccount(type) {
   let meta = null; 
   
-  console.log(type)
-  
   switch(type) {
     case "msa": { meta = 'Microsoft'; break; }
     case "elyby": { meta = 'Ely.by'; break; }
@@ -28,54 +26,55 @@ export function typeAccount(type) {
 // từng class đầy đủ trong object bên dưới, giống cách LOADER_DISPLAY đang
 // làm ở version.js.
 const VERSION_BADGE_CLASSES = {
-  slate:   'bg-slate-500/15 text-slate-400 border border-slate-500/40',
-  gray:    'bg-gray-500/15 text-gray-400 border border-gray-500/40',
-  zinc:    'bg-zinc-500/15 text-zinc-400 border border-zinc-500/40',
-  neutral: 'bg-neutral-500/15 text-neutral-400 border border-neutral-500/40',
-  stone:   'bg-stone-500/15 text-stone-400 border border-stone-500/40',
-  red:     'bg-red-500/15 text-red-400 border border-red-500/40',
-  orange:  'bg-orange-500/15 text-orange-400 border border-orange-500/40',
-  amber:   'bg-amber-500/15 text-amber-400 border border-amber-500/40',
-  yellow:  'bg-yellow-500/15 text-yellow-400 border border-yellow-500/40',
-  lime:    'bg-lime-500/15 text-lime-400 border border-lime-500/40',
-  green:   'bg-green-500/15 text-green-400 border border-green-500/40',
-  emerald: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/40',
-  teal:    'bg-teal-500/15 text-teal-400 border border-teal-500/40',
-  cyan:    'bg-cyan-500/15 text-cyan-400 border border-cyan-500/40',
-  sky:     'bg-sky-500/15 text-sky-400 border border-sky-500/40',
-  blue:    'bg-blue-500/15 text-blue-400 border border-blue-500/40',
-  indigo:  'bg-indigo-500/15 text-indigo-400 border border-indigo-500/40',
-  violet:  'bg-violet-500/15 text-violet-400 border border-violet-500/40',
-  purple:  'bg-purple-500/15 text-purple-400 border border-purple-500/40',
-  fuchsia: 'bg-fuchsia-500/15 text-fuchsia-400 border border-fuchsia-500/40',
-  pink:    'bg-pink-500/15 text-pink-400 border border-pink-500/40',
-  rose:    'bg-rose-500/15 text-rose-400 border border-rose-500/40',
+  slate:   'version-badge version-badge-slate',
+  gray:    'version-badge version-badge-gray',
+  zinc:    'version-badge version-badge-zinc',
+  neutral: 'version-badge version-badge-neutral',
+  stone:   'version-badge version-badge-stone',
+  red:     'version-badge version-badge-red',
+  orange:  'version-badge version-badge-orange',
+  amber:   'version-badge version-badge-amber',
+  yellow:  'version-badge version-badge-yellow',
+  lime:    'version-badge version-badge-lime',
+  green:   'version-badge version-badge-green',
+  emerald: 'version-badge version-badge-emerald',
+  teal:    'version-badge version-badge-teal',
+  cyan:    'version-badge version-badge-cyan',
+  sky:     'version-badge version-badge-sky',
+  blue:    'version-badge version-badge-blue',
+  indigo:  'version-badge version-badge-indigo',
+  violet:  'version-badge version-badge-violet',
+  purple:  'version-badge version-badge-purple',
+  fuchsia: 'version-badge version-badge-fuchsia',
+  pink:    'version-badge version-badge-pink',
+  rose:    'version-badge version-badge-rose',
 };
 
 const VERSION_ICON_CLASSES = {
-  slate:   { bg: 'bg-slate-500/15',   text: 'text-slate-400' },
-  gray:    { bg: 'bg-gray-500/15',    text: 'text-gray-400' },
-  zinc:    { bg: 'bg-zinc-500/15',    text: 'text-zinc-400' },
-  neutral: { bg: 'bg-neutral-500/15', text: 'text-neutral-400' },
-  stone:   { bg: 'bg-stone-500/15',   text: 'text-stone-400' },
-  red:     { bg: 'bg-red-500/15',     text: 'text-red-400' },
-  orange:  { bg: 'bg-orange-500/15',  text: 'text-orange-400' },
-  amber:   { bg: 'bg-amber-500/15',   text: 'text-amber-400' },
-  yellow:  { bg: 'bg-yellow-500/15',  text: 'text-yellow-400' },
-  lime:    { bg: 'bg-lime-500/15',    text: 'text-lime-400' },
-  green:   { bg: 'bg-green-500/15',   text: 'text-green-400' },
-  emerald: { bg: 'bg-emerald-500/15', text: 'text-emerald-400' },
-  teal:    { bg: 'bg-teal-500/15',    text: 'text-teal-400' },
-  cyan:    { bg: 'bg-cyan-500/15',    text: 'text-cyan-400' },
-  sky:     { bg: 'bg-sky-500/15',     text: 'text-sky-400' },
-  blue:    { bg: 'bg-blue-500/15',    text: 'text-blue-400' },
-  indigo:  { bg: 'bg-indigo-500/15',  text: 'text-indigo-400' },
-  violet:  { bg: 'bg-violet-500/15',  text: 'text-violet-400' },
-  purple:  { bg: 'bg-purple-500/15',  text: 'text-purple-400' },
-  fuchsia: { bg: 'bg-fuchsia-500/15', text: 'text-fuchsia-400' },
-  pink:    { bg: 'bg-pink-500/15',    text: 'text-pink-400' },
-  rose:    { bg: 'bg-rose-500/15',    text: 'text-rose-400' },
+  slate:   { bg: 'version-icon version-icon-slate', text: 'version-icon-slate' },
+  gray:    { bg: 'version-icon version-icon-gray',  text: 'version-icon-gray' },
+  zinc:    { bg: 'version-icon version-icon-zinc',  text: 'version-icon-zinc' },
+  neutral: { bg: 'version-icon version-icon-neutral', text: 'version-icon-neutral' },
+  stone:   { bg: 'version-icon version-icon-stone', text: 'version-icon-stone' },
+  red:     { bg: 'version-icon version-icon-red',   text: 'version-icon-red' },
+  orange:  { bg: 'version-icon version-icon-orange', text: 'version-icon-orange' },
+  amber:   { bg: 'version-icon version-icon-amber', text: 'version-icon-amber' },
+  yellow:  { bg: 'version-icon version-icon-yellow', text: 'version-icon-yellow' },
+  lime:    { bg: 'version-icon version-icon-lime',  text: 'version-icon-lime' },
+  green:   { bg: 'version-icon version-icon-green', text: 'version-icon-green' },
+  emerald: { bg: 'version-icon version-icon-emerald', text: 'version-icon-emerald' },
+  teal:    { bg: 'version-icon version-icon-teal',  text: 'version-icon-teal' },
+  cyan:    { bg: 'version-icon version-icon-cyan',  text: 'version-icon-cyan' },
+  sky:     { bg: 'version-icon version-icon-sky',   text: 'version-icon-sky' },
+  blue:    { bg: 'version-icon version-icon-blue',  text: 'version-icon-blue' },
+  indigo:  { bg: 'version-icon version-icon-indigo', text: 'version-icon-indigo' },
+  violet:  { bg: 'version-icon version-icon-violet', text: 'version-icon-violet' },
+  purple:  { bg: 'version-icon version-icon-purple', text: 'version-icon-purple' },
+  fuchsia: { bg: 'version-icon version-icon-fuchsia', text: 'version-icon-fuchsia' },
+  pink:    { bg: 'version-icon version-icon-pink',  text: 'version-icon-pink' },
+  rose:    { bg: 'version-icon version-icon-rose',  text: 'version-icon-rose' },
 };
+
 
 function versionBadgeClasses(color) {
   return VERSION_BADGE_CLASSES[color] || VERSION_BADGE_CLASSES.zinc;
@@ -83,6 +82,35 @@ function versionBadgeClasses(color) {
 
 function versionIconClasses(color) {
   return VERSION_ICON_CLASSES[color] || VERSION_ICON_CLASSES.zinc;
+}
+
+const MODLOADER_BADGE_CLASS = {
+  vanilla:  VERSION_BADGE_CLASSES['emerald'],
+  forge:    VERSION_BADGE_CLASSES['slate'],
+  neoforge: VERSION_BADGE_CLASSES['orange'],
+  fabric:   VERSION_BADGE_CLASSES['cyan']
+}
+
+const MODLOADER_ICON_CLASS = {  
+  vanilla:  VERSION_ICON_CLASSES['emerald'],
+  forge:    VERSION_ICON_CLASSES['slate'],
+  neoforge: VERSION_ICON_CLASSES['orange'],
+  fabric:   VERSION_ICON_CLASSES['cyan']
+}
+
+const MODLOADER_ICON_NAME = {
+  Vanilla: 'fa-brands fa-bitbucket',
+  Forge: 'fas fa-hammer',
+  NeoForge: 'fab fa-gitlab',
+  Fabric: 'fas fa-layer-group',
+}
+
+function versionBadgeModLoader(nameloader) {
+  return MODLOADER_BADGE_CLASS[nameloader] || VERSION_BADGE_CLASSES.blue;
+}
+
+function versionIconModLoader(nameloader) {
+  return MODLOADER_ICON_CLASS[nameloader] || VERSION_ICON_CLASSES.blue;
 }
 
 export async function renderHome(currentAccount, config, getVersionList, lastProfile) {
@@ -112,7 +140,6 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-          <span class="hero-badge">Norach Launcher</span>
           <h2 class="hero-title">Minecraft Java Edition!</h2>
           <p class="hero-subtitle">
             ${isLoggedIn
@@ -129,22 +156,20 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
             <div>
               <p class="preview-label">Xem trước phiên bản</p>
               <h3 class="preview-title">
-                <span class="version-badge ${versionInfo ? versionBadgeClasses(versionInfo.color) : 'version-badge-default'}">
+                <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
                   <i class="fas fa-cube"></i>
                   ${selectedVersion}
                 </span>
                 ${versionInfo ? `
-                  <span class="version-badge ${versionBadgeClasses(versionInfo.color)}">
+                  <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
+                    <i class="fa-solid fa-tag"></i>
                     ${!versionInfo.label ? minecraftUpdates[randomIndex] : versionInfo.label}
-                  </span>` : ''}
-                ${lastProfile.loader !== 'vanilla' ? `
-                  <span class="version-badge version-badge-default">
-                    ${lastProfile.loader}
-                  </span>` : `
-                  <span class="version-badge ${versionInfo ? versionBadgeClasses(versionInfo.color) : 'version-badge-default'}">
-                    ${lastProfile.name}
-                  </span>
-                `}
+                  </span>` : ''
+                }
+               <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
+                <i class="${MODLOADER_ICON_NAME[lastProfile.name.match(/^[^\s]+/)[0]]}"></i>
+                ${lastProfile.name}
+               </span>
               </h3>
             </div>
             <button id="play-main-btn" onclick="startGame()">
@@ -159,8 +184,8 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
             <div class="feature-grid">
               ${versionInfo.features.map(f => `
                 <div class="feature-card">
-                  <div class="feature-icon ${versionIconClasses(versionInfo.color).bg}">
-                    <i class="fas ${f.icon} ${versionIconClasses(versionInfo.color).text} text-sm"></i>
+                  <div class="feature-icon ${versionIconModLoader(lastProfile.loader).bg}">
+                    <i class="fas ${f.icon} ${versionIconModLoader(lastProfile.loader).text} text-sm"></i>
                   </div>
                   <p class="feature-text">${f.text}</p>
                 </div>

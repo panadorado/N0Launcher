@@ -65,7 +65,7 @@ N0Launcher được xây dựng dựa trên các thư viện mã nguồn mở ch
 | **electron-builder** | Đóng gói & phân phối ứng dụng | [Website](https://www.electron.build/) · [GitHub](https://github.com/electron-userland/electron-builder) |
 | **Vite** | Build tool nhanh | [Website](https://vitejs.dev/) |
 | **javascript-obfuscator** | Bảo vệ mã nguồn | [npm](https://www.npmjs.com/package/javascript-obfuscator) |
-
+| **X Minecraft Launcher** | Trình khởi chạy Minecraft mã nguồn mở với giao diện người dùng hiện đại. | [Website](https://xmcl.app/en/)
 > Đặc biệt cảm ơn dự án **X Minecraft Launcher (XMCL)** và team **Voxelum** đã phát triển bộ thư viện `@xmcl/*` cực kỳ mạnh mẽ và mã nguồn mở.
 
 ---

@@ -6,6 +6,7 @@ async function copyMainFiles() {
   await fs.copy('src/main', 'dist/main', { overwrite: true });
   await fs.copy('src/preload', 'dist/preload', { overwrite: true });
   await fs.copy('src/core', 'dist/core', { overwrite: true });   // ← Thêm dòng này
+  await fs.copy('src/controller', 'dist/controller', { overwrite: true });
   await fs.copy('src/utils', 'dist/utils', { overwrite: true });
   // Icon dùng bởi main process (BrowserWindow icon) không được Vite build vì
   // không có file nào trong renderer tham chiếu tới nó bằng import/url(). Copy
