@@ -88,7 +88,7 @@ Launcher sẽ được cập nhật dần theo thời gian rảnh của tác gi�
 
 ## Cài đặt & Sử dụng
 
-1. Tải bản phát hành mới nhất từ [Releases](https://github.com/your-username/N0Launcher/releases).
+1. Tải bản phát hành mới nhất từ [Releases](https://github.com/panadorado/minecraft_n0launcher/releases/tag/v1.0.1).
 2. Giải nén / cài đặt.
 3. Chạy `N0Launcher.exe`.
 4. Đăng nhập Microsoft hoặc dùng Offline.
