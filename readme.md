@@ -106,10 +106,4 @@ Launcher sẽ được cập nhật dần theo thời gian rảnh của tác gi�
 
 ---
 
-## Giấy phép
-
-MIT License (hoặc giấy phép bạn muốn đặt).
-
----
-
 **N0Launcher** — Launcher nhỏ gọn, đủ dùng, dành cho những ai thích sự đơn giản.
