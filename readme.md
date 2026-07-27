@@ -27,7 +27,9 @@
   - Hỗ trợ Proxy (tùy chọn).
 
 - **Đăng nhập**
-  - Hỗ trợ đăng nhập Microsoft (Online) và Offline.
+  - Hỗ trợ đăng nhập Microsoft (Online) 
+  - Hổ trợ đăng nhập Ely.by (Online)
+  - Chơi Offline chỉ với tên đăng nhập.
 
 - **Khởi chạy nhanh**
   - Nút “Bắt đầu” lớn, dễ nhìn.
