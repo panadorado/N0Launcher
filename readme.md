@@ -31,10 +31,6 @@
   - Hổ trợ đăng nhập Ely.by (Online) 
   - Chơi Offline chỉ với tên đăng nhập
 
-- **Khởi chạy nhanh**
-  - Nút “Bắt đầu” lớn, dễ nhìn.
-  - Xem trước phiên bản đang chọn.
-
 ---
 
 ### Core Dependencies
