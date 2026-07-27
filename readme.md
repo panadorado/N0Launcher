@@ -2,9 +2,6 @@
 
 **N0Launcher** là một Minecraft Launcher được custom cá nhân, xây dựng trên nền tảng **Electron + Node.js**, giao diện tối giản, hiện đại và tập trung vào trải nghiệm sử dụng mượt mà.
 
-> Made with ❤️ for Minecraft  
-> Phiên bản hiện tại: **v1.0.0**
-
 ---
 
 ## Tính năng chính
@@ -38,10 +35,6 @@
 
 ---
 
-## Công nghệ sử dụng
-
-N0Launcher được xây dựng dựa trên các thư viện mã nguồn mở chất lượng cao. Xin gửi lời cảm ơn chân thành đến các tác giả và cộng đồng đã phát triển những package tuyệt vời này:
-
 ### Core Dependencies
 
 | Package | Mô tả | Link chính thức |
@@ -66,11 +59,10 @@ N0Launcher được xây dựng dựa trên các thư viện mã nguồn mở ch
 | **Vite** | Build tool nhanh | [Website](https://vitejs.dev/) |
 | **javascript-obfuscator** | Bảo vệ mã nguồn | [npm](https://www.npmjs.com/package/javascript-obfuscator) |
 | **X Minecraft Launcher** | Trình khởi chạy Minecraft mã nguồn mở với giao diện người dùng hiện đại. | [Website](https://xmcl.app/en/)
-> Đặc biệt cảm ơn dự án **X Minecraft Launcher (XMCL)** và team **Voxelum** đã phát triển bộ thư viện `@xmcl/*` cực kỳ mạnh mẽ và mã nguồn mở.
 
 ---
 
-## Nhược điểm (vì là launcher custom cá nhân)
+## Lưu Ý
 
 Vì N0Launcher được phát triển bởi **một cá nhân** (không phải team lớn), nên hiện tại vẫn còn một số hạn chế:
 
@@ -88,7 +80,7 @@ Launcher sẽ được cập nhật dần theo thời gian rảnh của tác gi�
 
 ## Cài đặt & Sử dụng
 
-1. Tải bản phát hành mới nhất từ [Releases](https://github.com/panadorado/minecraft_n0launcher/releases/tag/v1.0.1).
+1. Tải bản phát hành mới nhất từ [Releases](https://github.com/panadorado/minecraft_n0launcher/releases/tag/v1.0.2).
 2. Giải nén / cài đặt.
 3. Chạy `N0Launcher.exe`.
 4. Đăng nhập Microsoft hoặc dùng Offline.
