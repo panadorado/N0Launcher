@@ -28,8 +28,8 @@
 
 - **Đăng nhập**
   - Hỗ trợ đăng nhập Microsoft (Online) 
-  - Hổ trợ đăng nhập Ely.by (Online)
-  - Chơi Offline chỉ với tên đăng nhập.
+  - Hổ trợ đăng nhập Ely.by (Online) 
+  - Chơi Offline chỉ với tên đăng nhập
 
 - **Khởi chạy nhanh**
   - Nút “Bắt đầu” lớn, dễ nhìn.
@@ -85,7 +85,7 @@ Launcher sẽ được cập nhật dần theo thời gian rảnh của tác gi�
 1. Tải bản phát hành mới nhất từ [Releases](https://github.com/panadorado/minecraft_n0launcher/releases/tag/v1.0.2).
 2. Giải nén / cài đặt.
 3. Chạy `N0Launcher.exe`.
-4. Đăng nhập Microsoft hoặc dùng Offline.
+4. Đăng nhập Microsoft hoặc dùng Ely.by, Offline.
 5. Tạo cấu hình phiên bản → thêm mods (nếu cần) → Bắt đầu chơi!
 
 ---
