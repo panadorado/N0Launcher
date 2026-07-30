@@ -130,8 +130,8 @@ async function loginWithMicrosoftAuthentication(onDeviceCode) {
 // thị trong config như trước đây).
 function logoutMicrosoft() {
   try {
-    const stats = fs.statSync(path.resolve(targetPath));
-    if (!stats.isFile() || !stats.isDirectory()) return;
+    // const stats = fs.statSync(path.resolve(targetPath));
+    // if (!stats.isFile() || !stats.isDirectory()) return;
     fs.rmSync(MSA_CACHE_DIR, { recursive: true, force: true });
   } catch (e) {
     console.error('[auth:logoutMicrosoft] Không thể xoá cache đăng nhập:', e?.message);
