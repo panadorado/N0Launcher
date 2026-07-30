@@ -1,6 +1,6 @@
 {
   "name": "n0launcher",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "N0rach",
   "description": "N0Launcher make with love Minecraft",
   "private": true,
@@ -64,7 +64,7 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "differentialPackage": false
+      "differentialPackage": true
     }
   },
   "overrides": {

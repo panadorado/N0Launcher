@@ -121,7 +121,7 @@ async function loginWithMicrosoftAuthentication(onDeviceCode) {
     throw new Error(i18n.t('auth.msaNoProfile', currentLocale()));
   }
 
-  return jsonData(result.token, '', result.profile.id, esult.profile.name, 'msa');
+  return jsonData(result.token, '', result.profile.id, result.profile.name, 'msa');
 }
 
 // Xoá cache token Microsoft — dùng khi người dùng bấm "Đăng xuất", để lần
