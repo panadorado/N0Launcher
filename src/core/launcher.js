@@ -1,6 +1,5 @@
 const { app } = require('electron');
 const { Client } = require('minecraft-launcher-core');
-const { execFile } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { Version } = require('@xmcl/core');
@@ -8,7 +7,7 @@ const { loadConfig, saveConfig } = require('./config');
 const { findProfile, getProfileGameDir, ensureProfileDir } = require('./profiles');
 const { installProfile, isCancelRequested } = require('./installer');
 const { recommendRamMB } = require('./ram');
-const { ensureJavaRuntime, guessJavaComponent } = require('./javaManager');
+const { ensureJavaRuntime, guessJavaComponent, getInstalledJavaMajorVersion } = require('./javaManager');
 
 let lastDebugMessage = '';
 const launcher = new Client();
@@ -27,23 +26,6 @@ const MODDED_JVM_COMPAT_ARGS = [
   '--add-exports', 'java.base/sun.security.util=ALL-UNNAMED',
 ];
 
-function parseJavaMajorVersion(versionOutput) {
-  const match = versionOutput.match(/version "(\d+)(?:\.(\d+))?/);
-  if (!match) return null;
-  const first = parseInt(match[1], 10);
-  if (first === 1 && match[2]) return parseInt(match[2], 10);
-  return first;
-}
-
-function getInstalledJavaMajorVersion(javaPath) {
-  return new Promise((resolve) => {
-    execFile(javaPath, ['-version'], (err, stdout, stderr) => {
-      if (err) return resolve(null);
-      resolve(parseJavaMajorVersion(`${stdout}\n${stderr}`));
-    });
-  });
-}
-
 function estimateRequiredJavaMajor(mcVersion) {
   const parts = String(mcVersion || '').split('.').map(n => parseInt(n, 10) || 0);
   const [major, minor = 0, patch = 0] = parts;
@@ -57,9 +39,25 @@ function estimateRequiredJavaMajor(mcVersion) {
   return 8; // <= 1.16.5
 }
 
+// Minecraft/Forge trước 1.13 khởi động qua net.minecraft.launchwrapper.Launch,
+// vốn ép kiểu system classloader về java.net.URLClassLoader — cách này VỠ
+// HẲN trên Java 9+ (JDK 9 đổi AppClassLoader mặc định, không còn kế thừa
+// URLClassLoader nữa), ném ClassCastException ngay khi khởi động, không phải
+// lỗi "thiếu tính năng" có thể bỏ qua. Vì vậy các bản này bắt buộc CHÍNH XÁC
+// Java 8 — không chỉ "Java 8 trở lên" như các version khác — kể cả khi máy
+// đã có sẵn Java mới hơn (17/21/25...) vẫn phải dùng đúng Java 8.
+// Trả về null nếu không có giới hạn trên (Java mới hơn vẫn dùng được).
+function estimateMaxCompatibleJavaMajor(mcVersion) {
+  const parts = String(mcVersion || '').split('.').map(n => parseInt(n, 10) || 0);
+  const [major, minor = 0] = parts;
+  if (major === 1 && minor < 13) return 8;
+  return null;
+}
+
 async function getAuthlibInjectorDownloadUrl() {
   const res = await fetch(AUTHLIB_INJECTOR_API, {
-    headers: { 'User-Agent': 'Minecraft-Launcher' }
+    headers: { 'User-Agent': 'Minecraft-Launcher' },
+    signal: AbortSignal.timeout(15_000), // 15 giây — tránh treo vô hạn nếu mạng lỗi
   });
 
   if (!res.ok) throw new Error('Không thể lấy thông tin release mới nhất');
@@ -296,6 +294,11 @@ async function launchGame(account, profileId, onProgress = () => {}) {
   if (!requiredJavaMajor) {
     requiredJavaMajor = estimateRequiredJavaMajor(profile.gameVersion);
   }
+  // Giới hạn TRÊN (nếu có) — riêng cho các bản Forge/Minecraft cũ dùng
+  // LaunchWrapper, vốn không chạy được trên Java quá mới dù máy đã có sẵn.
+  // Không lấy từ version JSON vì trường này Mojang không công bố "max" —
+  // chỉ tự suy luận theo gameVersion.
+  const maxCompatibleJavaMajor = estimateMaxCompatibleJavaMajor(profile.gameVersion);
 
   let javaPathForLaunch = config.javaPath || undefined;
 
@@ -303,16 +306,25 @@ async function launchGame(account, profileId, onProgress = () => {}) {
     const javaPathToCheck = config.javaPath || 'java';
     const installedJavaMajor = await getInstalledJavaMajorVersion(javaPathToCheck);
 
-    if (!installedJavaMajor || installedJavaMajor < requiredJavaMajor) {
+    const tooOld = !installedJavaMajor || installedJavaMajor < requiredJavaMajor;
+    const tooNew = installedJavaMajor && maxCompatibleJavaMajor != null && installedJavaMajor > maxCompatibleJavaMajor;
+
+    if (tooOld || tooNew) {
       if (config.javaPath) {
         throw new Error(
-          `Java tại "${config.javaPath}" không tương thích: phiên bản Minecraft "${profile.gameVersion}" yêu cầu Java ${requiredJavaMajor} trở lên. Vui lòng sửa lại đường dẫn Java trong Cài đặt, hoặc xoá trắng ô đó để launcher tự động tải Java phù hợp.`
+          tooNew
+            ? `Java tại "${config.javaPath}" không tương thích: phiên bản Minecraft "${profile.gameVersion}" dùng LaunchWrapper, CHỈ chạy được với đúng Java ${maxCompatibleJavaMajor}, không chạy được với Java ${installedJavaMajor} đang trỏ tới (sẽ báo lỗi ClassCastException khi khởi động). Vui lòng đổi đường dẫn Java sang bản Java ${maxCompatibleJavaMajor}, hoặc xoá trắng ô đó để launcher tự tải Java phù hợp.`
+            : `Java tại "${config.javaPath}" không tương thích: phiên bản Minecraft "${profile.gameVersion}" yêu cầu Java ${requiredJavaMajor} trở lên. Vui lòng sửa lại đường dẫn Java trong Cài đặt, hoặc xoá trắng ô đó để launcher tự động tải Java phù hợp.`
         );
       }
 
       const component = requiredJavaComponent || guessJavaComponent(requiredJavaMajor);
       onProgress({ phase: 'installing', percent: 0, label: `Java hệ thống không tương thích, đang tải Java ${requiredJavaMajor}...` });
-      javaPathForLaunch = await ensureJavaRuntime(component, onProgress);
+      // Truyền requiredJavaMajor để ensureJavaRuntime tự phát hiện trường hợp
+      // component NÀY đã cài trước đó nhưng là bản Java cũ không đủ yêu cầu
+      // (vd Mojang cập nhật nội dung "java-runtime-delta" sang Java mới hơn
+      // theo thời gian) — thay vì cứ dùng mãi bản cũ rồi báo lỗi launch.
+      javaPathForLaunch = await ensureJavaRuntime(component, onProgress, requiredJavaMajor);
     }
   }
 
@@ -320,8 +332,8 @@ async function launchGame(account, profileId, onProgress = () => {}) {
 
   let customArgs = [];
 
-  if(!profile.loader !== 'vanilla') {
-    customArgs.push(...MODDED_JVM_COMPAT_ARGS);
+  if (profile.loader !== 'vanilla') {
+    if(requiredJavaMajor !== 8) customArgs.push(...MODDED_JVM_COMPAT_ARGS);
     customArgs.push(`-DlibraryDirectory=${path.join(gameDir, 'libraries')}`);
   }
 

@@ -1,5 +1,7 @@
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
+const { app } = require("electron");
 
 // Giữ console gốc để tránh đệ quy
 const originalConsole = {
@@ -11,7 +13,22 @@ const originalConsole = {
 };
 
 const LOGGER_TYPE = 'EWID';
-const LOGGER_DIR = '../../../../logs';
+
+// Dùng thư mục logs chuẩn của Electron (luôn có quyền ghi, không phụ thuộc
+// launcher được cài ở đâu) thay vì dò ngược __dirname — cách cũ có thể trỏ
+// vào Program Files khi đóng gói, nơi tiến trình không có quyền ghi.
+// app.getPath('logs') có thể ném lỗi nếu gọi trước khi app 'ready' (ví dụ
+// một exception xảy ra rất sớm khi khởi động) — fallback về thư mục tạm để
+// logger không bao giờ là nguyên nhân khiến launcher crash.
+function getLogFilePath(level, dateTime) {
+  let dir;
+  try {
+    dir = app.getPath('logs');
+  } catch (e) {
+    dir = path.join(os.tmpdir(), 'N0Launcher-logs');
+  }
+  return path.join(dir, `${level}-${dateTime}.log`);
+}
 
 function ensureDirectoryExistence(filePath) {
   const dirname = path.dirname(filePath);
@@ -30,7 +47,7 @@ module.exports = function logger(level, message, printToConsole = true) {
     .toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "Asia/Ho_Chi_Minh" })
     .replace(/\//g, "_");
 
-  const logFilePath = path.join(__dirname, LOGGER_DIR, `${level}-${dateTime}.log`);
+  const logFilePath = getLogFilePath(level, dateTime);
 
   ensureDirectoryExistence(logFilePath);
 

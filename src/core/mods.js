@@ -19,6 +19,18 @@ function resourcePacksDir(config, profile) {
   return path.join(getProfileGameDir(config, profile), 'resourcepacks');
 }
 
+// `file` đến từ renderer (IPC) — chặn path traversal (vd "../../a.exe") trước
+// khi rename/xoá, để 1 lời gọi IPC sai lệch hoặc bị lợi dụng không thể động
+// tới file ngoài thư mục mods/.
+function resolveInsideDir(dir, file) {
+  const dirResolved = path.resolve(dir);
+  const target = path.resolve(dir, file);
+  if (target !== dirResolved && !target.startsWith(dirResolved + path.sep)) {
+    throw new Error('Tên file không hợp lệ.');
+  }
+  return target;
+}
+
 
 async function readModMetadata(fullPath, loader) {
   const attempts = loader === 'fabric'
@@ -93,8 +105,8 @@ function setModEnabled(profileId, file, enabled) {
   const dir = modsDir(config, profile);
 
   const baseName = file.replace(/\.disabled$/i, '');
-  const from = path.join(dir, file);
-  const to = path.join(dir, enabled ? baseName : `${baseName}.disabled`);
+  const from = resolveInsideDir(dir, file);
+  const to = resolveInsideDir(dir, enabled ? baseName : `${baseName}.disabled`);
 
   if (path.resolve(from) === path.resolve(to)) {
     return { file: path.basename(to), enabled };
@@ -111,7 +123,7 @@ function deleteMod(profileId, file) {
   const config = loadConfig();
   const profile = getProfileOrThrow(config, profileId);
   const dir = modsDir(config, profile);
-  const full = path.join(dir, file);
+  const full = resolveInsideDir(dir, file);
   if (!fs.existsSync(full)) throw new Error(`Không tìm thấy file mod: ${file}`);
   fs.rmSync(full);
 }

@@ -1,3 +1,5 @@
+const os = require('os')
+
 function recommendRamMB(profile) {
   if (!profile || !profile.gameVersion) return 2048;
 
@@ -14,7 +16,10 @@ function recommendRamMB(profile) {
   // Modpack/mod loader thường cần thêm RAM để chạy song song các mod.
   if (profile.loader && profile.loader !== 'vanilla') base += 2048;
 
-  return Math.min(base, 16384);
+  // tính toán ram đang có
+  const maxRam = Math.floor(os.totalmem / (1024 * 1024));
+
+  return Math.min(base, maxRam);
 }
 
 module.exports = { recommendRamMB };

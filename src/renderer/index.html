@@ -25,16 +25,16 @@
       
       <nav class="nav">
         <button onclick="showPage('home')" class="nav-btn active">
-          <i class="fas fa-home"></i> Trang chủ
+          <i class="fas fa-home"></i> <span id="nav-label-home">Trang chủ</span>
         </button>
         <button onclick="showPage('versions')" class="nav-btn">
-          <i class="fas fa-list"></i> Phiên bản
+          <i class="fas fa-list"></i> <span id="nav-label-versions">Phiên bản</span>
         </button>
         <button onclick="showPage('mods')" class="nav-btn">
-          <i class="fas fa-puzzle-piece"></i> Mods &amp; Resource Packs
+          <i class="fas fa-puzzle-piece"></i> <span id="nav-label-mods">Mods &amp; Resource Packs</span>
         </button>
         <button onclick="showPage('settings')" class="nav-btn">
-          <i class="fas fa-cog"></i> Cài đặt
+          <i class="fas fa-cog"></i> <span id="nav-label-settings">Cài đặt</span>
         </button>
       </nav>
 
@@ -42,8 +42,8 @@
 
       <!-- Footer Version -->
       <div class="sidebar-footer">
-        N0Launcher <span class="version">v1.0.2</span><br>
-        <span class="credit">Made with ❤️ for Minecraft</span>
+        N0Launcher <span class="version">v1.0.3.1</span><br>
+        <span class="credit" id="sidebar-credit">Made with ❤️ for Minecraft</span>
       </div>
     </div>
 
@@ -63,6 +63,23 @@
       <div id="progress-fill" style="width:0%"></div>
     </div>
   </div>
+
+  <!-- Thông báo cập nhật -->
+  <div id="update-banner">
+    <div class="update-banner-icon"><i class="fas fa-rocket"></i></div>
+    <div class="update-banner-body">
+      <p class="update-banner-title" id="update-banner-title"></p>
+      <p class="update-banner-desc" id="update-banner-desc"></p>
+      <div class="update-banner-progress" id="update-banner-progress-wrap">
+        <div class="update-banner-progress-fill" id="update-banner-progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="update-banner-actions" id="update-banner-actions"></div>
+    <button class="update-banner-close" onclick="window.dismissUpdateBanner()" title="Đóng">
+      <i class="fas fa-xmark"></i>
+    </button>
+  </div>
+
   <script type="module" src="src/app.js"></script>
 </body>
 </html>

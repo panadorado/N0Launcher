@@ -1,19 +1,19 @@
 {
   "name": "n0launcher",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "N0rach",
   "description": "N0Launcher make with love Minecraft",
   "private": true,
   "main": "dist/main/index.js",
   "type": "commonjs",
   "scripts": {
-    "dev": "vite",
-    "obfuscate": "node scripts/obfuscate.js",
+    "start": "npm run build && npm run obfuscate && electron .",
+    "dev:mon": "npm run build && npm run obfuscate && nodemon --exec electron .",
     "build": "vite build && node scripts/build-main.js",
+    "obfuscate": "node scripts/obfuscate.js",
     "pack": "npm run build && npm run obfuscate && electron-builder",
     "pack:win": "npm run build && npm run obfuscate && electron-builder --win",
-    "start": "npm run build && npm run obfuscate && electron .",
-    "dev:mon": "npm run build && npm run obfuscate && nodemon --exec electron ."
+    "encode": "npm run build && npm run obfuscate"
   },
   "devDependencies": {
     "electron": "^43.1.1",
@@ -29,9 +29,11 @@
     "@xmcl/resourcepack": "^1.2.5",
     "@xmcl/task": "^4.1.1",
     "adm-zip": "^0.6.0",
+    "electron-updater": "^6.8.9",
     "fs-extra": "^11.3.6",
     "minecraft-launcher-core": "^3.18.2",
     "msmc": "^5.0.5",
+    "prismarine-auth": "3.1.1",
     "undici": "7.2.3"
   },
   "build": {
@@ -39,6 +41,11 @@
     "productName": "N0Launcher",
     "directories": {
       "output": "release"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "panadorado",
+      "repo": "minecraft_n0launcher"
     },
     "files": [
       "dist/**/*",
@@ -56,7 +63,8 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "differentialPackage": false
     }
   },
   "overrides": {

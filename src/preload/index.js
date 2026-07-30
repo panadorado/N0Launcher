@@ -1,7 +1,22 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
-  loginWithMicrosoft: () => ipcRenderer.invoke('auth:loginWithMicrosoft'),
+  loginWithMicrosoftAccount: () => ipcRenderer.invoke('auth:loginWithMicrosoftAccount'),
+  loginWithMicrosoftAuthentication: () => ipcRenderer.invoke('auth:loginWithMicrosoftAuthentication'),
+  logoutMicrosoft: () => ipcRenderer.invoke('auth:logoutMicrosoft'),
+  // Đăng ký lắng nghe mã đăng nhập Microsoft (device code) gửi từ main
+  // process ngay khi có, trước khi loginWithMicrosoftAuthentication() resolve xong.
+  onMicrosoftDeviceCode: (callback) => {
+    const listener = (_event, data) => callback(data);
+    ipcRenderer.on('auth:deviceCode', listener);
+    return () => ipcRenderer.removeListener('auth:deviceCode', listener);
+  },
+  // Mở URL đăng nhập Microsoft trên trình duyệt hệ thống — thực hiện ở main
+  // process (qua IPC) vì preload chạy sandbox không có sẵn module `shell`
+  // (gọi shell.openExternal thẳng ở đây sẽ ném "Cannot read properties of
+  // undefined (reading 'openExternal')"). Việc kiểm tra URL có đúng domain
+  // microsoft.com hay không cũng được main process tự làm lại cho chắc.
+  openMicrosoftLoginPage: (url) => ipcRenderer.invoke('auth:openMicrosoftLoginPage', url),
   loginOffline: (username) => ipcRenderer.invoke('auth:loginOffline', username),
   loginWithElyBy: (login, password) => ipcRenderer.invoke('auth:loginWithElyBy', login, password),
   launchGame: (account, profileId) => ipcRenderer.invoke('launcher:launchGame', account, profileId),
@@ -43,5 +58,17 @@ contextBridge.exposeInMainWorld('api', {
     const listener = (_event, data) => callback(data);
     ipcRenderer.on('launcher:progress', listener);
     return () => ipcRenderer.removeListener('launcher:progress', listener);
+  },
+
+  // ---- Kiểm tra & tải bản cập nhật ----
+  checkForUpdates: () => ipcRenderer.invoke('update:check'),
+  downloadUpdate: () => ipcRenderer.invoke('update:download'),
+  installUpdate: () => ipcRenderer.invoke('update:install'),
+  isPortableBuild: () => ipcRenderer.invoke('update:isPortable'),
+  getAppVersion: () => ipcRenderer.invoke('update:getVersion'),
+  onUpdateStatus: (callback) => {
+    const listener = (_event, data) => callback(data);
+    ipcRenderer.on('update:status', listener);
+    return () => ipcRenderer.removeListener('update:status', listener);
   },
 });

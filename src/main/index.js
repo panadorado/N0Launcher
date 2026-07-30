@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const { registerIpcHandlers } = require('../controller/ipc');
+const { loadConfig } = require('../core/config');
+const { checkForUpdates } = require('../core/updater');
 const path = require('path');
 
 // ====================== KHỞI TẠO LOGGER ======================
@@ -100,12 +102,50 @@ if (!gotTheLock) {
 
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
     // mainWindow.webContents.openDevTools();
+
+    // Giải nén/tải file lớn (native libs, assets, Forge/NeoForge installer...)
+    // có thể đẩy renderer tới giới hạn bộ nhớ và khiến tiến trình renderer bị
+    // hệ điều hành/Chromium kill — nếu không bắt sự kiện này, cửa sổ sẽ đứng
+    // im/trắng mà không rõ lý do. Log nguyên nhân và tự tải lại thay vì để
+    // launcher trông như bị treo/crash.
+    mainWindow.webContents.on('render-process-gone', (_event, details) => {
+      logger('ERROR', `Renderer process gone: reason=${details.reason} exitCode=${details.exitCode}`);
+      if (details.reason !== 'clean-exit' && mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.reload();
+      }
+    });
+
+    mainWindow.webContents.on('unresponsive', () => {
+      logger('WARN', 'Cửa sổ chính tạm thời không phản hồi (có thể do tác vụ giải nén/tải nặng đang chạy).');
+    });
+
+    mainWindow.webContents.on('responsive', () => {
+      logger('INFO', 'Cửa sổ chính đã phản hồi trở lại.');
+    });
   }
+
+  // Tiến trình phụ (GPU, network service, tiện ích...) bị crash không làm
+  // chết app chính, nhưng vẫn nên ghi log để biết nguyên nhân nếu launcher
+  // có dấu hiệu bất ổn trong lúc giải nén/tải.
+  app.on('child-process-gone', (_event, details) => {
+    logger('ERROR', `Child process gone: type=${details.type} reason=${details.reason}`);
+  });
 
   app.whenReady().then(() => {
     createWindow();
     registerIpcHandlers(mainWindow);
     setupRendererLogging(mainWindow);
+
+    // Tự kiểm tra cập nhật lúc khởi động (nếu người dùng không tắt trong Cài
+    // đặt) — chỉ KIỂM TRA, không tự tải/cài; renderer quyết định có hỏi
+    // người dùng hay không dựa trên config.updateCheck.dismissedVersion.
+    // Trễ vài giây để không cạnh tranh băng thông/CPU với lúc cửa sổ đang
+    // khởi tạo, và lỗi mạng ở đây không được phép làm hỏng khởi động app.
+    setTimeout(() => {
+      const config = loadConfig();
+      if (config.updateCheck?.checkOnStartup === false) return;
+      checkForUpdates().catch((e) => logger('WARN', `[updater] Kiểm tra cập nhật lúc khởi động thất bại: ${e?.message}`));
+    }, 5000);
   });
 
   app.on('window-all-closed', () => {

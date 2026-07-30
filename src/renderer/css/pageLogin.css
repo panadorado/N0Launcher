@@ -320,3 +320,109 @@
 #login-error.shake {
   animation: shake 0.4s ease-in-out;
 }
+
+/* ===== Modal đăng nhập Microsoft (device code) ===== */
+
+#msa-device-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 1.5rem;
+}
+
+#msa-device-modal.show {
+  display: flex;
+}
+
+.msa-device-box {
+  max-width: 26rem;
+}
+
+.msa-device-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.msa-device-desc {
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.msa-device-code-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#msa-device-code {
+  flex: 1;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background-color: rgba(39, 39, 42, 0.8);
+  border: 1px solid #3f3f46;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: #ffffff;
+}
+
+.btn-msa-copy {
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  border: 1px solid #3f3f46;
+  background-color: rgba(39, 39, 42, 0.8);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-msa-copy:hover {
+  background-color: #3f3f46;
+}
+
+.btn-msa-copy.copied {
+  color: #4ade80;
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.btn-msa-open {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-msa-open:hover {
+  background-color: #3b82f6;
+}
+
+.msa-device-status {
+  color: #a1a1aa;
+  font-size: 0.8125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

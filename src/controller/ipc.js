@@ -1,5 +1,6 @@
-const { ipcMain, dialog, shell } = require('electron');
-const { loginWithMicrosoft, loginOffline, loginWithElyBy } = require('../core/auth');
+const { ipcMain, dialog, shell, app } = require('electron');
+const { loginWithMicrosoftAccount, loginWithMicrosoftAuthentication, logoutMicrosoft, loginOffline, loginWithElyBy } = require('../core/auth');
+const { setupUpdater, checkForUpdates, downloadUpdate, quitAndInstall, isPortableBuild } = require('../core/updater');
 const { loadConfig, saveConfig } = require('../core/config');
 const { launchGame, getInstalledJavaMajorVersion, estimateRequiredJavaMajor } = require('../core/launcher');
 const { cancelInstall } = require('../core/installer');
@@ -10,7 +11,31 @@ const { checkMirrorHealth } = require('../core/network');
 const { listMods, setModEnabled, deleteMod, listResourcePacks } = require('../core/mods');
 
 function registerIpcHandlers(mainWindow) {
-  ipcMain.handle('auth:loginWithMicrosoft', () => loginWithMicrosoft());
+
+  // đăng nhập trực tiếp popup từ launcher 
+  ipcMain.handle('auth:loginWithMicrosoftAccount', () => loginWithMicrosoftAccount());
+  // Đăng nhập Microsoft bằng device code: đẩy mã (userCode/verificationUri)
+  // sang renderer ngay khi có, qua cùng kênh sự kiện giống launcher:progress,
+  // vì ipcMain.handle chỉ trả về được 1 lần lúc xong, không stream giữa chừng.
+  ipcMain.handle('auth:loginWithMicrosoftAuthentication', () => loginWithMicrosoftAuthentication((deviceCode) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('auth:deviceCode', deviceCode);
+    }
+  }));
+  ipcMain.handle('auth:logoutMicrosoft', () => logoutMicrosoft());
+
+  // Mở URL đăng nhập Microsoft (device code) trên trình duyệt hệ thống.
+  // Phải làm ở main process: preload chạy sandbox không có module `shell`,
+  // gọi shell.openExternal trực tiếp trong preload sẽ ném lỗi "Cannot read
+  // properties of undefined (reading 'openExternal')". Vẫn giữ kiểm tra domain
+  // microsoft.com ở đây để tránh mở URL bất kỳ nếu có lời gọi bất thường.
+  ipcMain.handle('auth:openMicrosoftLoginPage', (_event, url) => {
+    const parsed = new URL(url);
+    const isMicrosoft = parsed.protocol === 'https:' && /(^|\.)microsoft\.com$/.test(parsed.hostname);
+    if (!isMicrosoft) throw new Error('URL không hợp lệ.');
+    return shell.openExternal(parsed.href);
+  });
+
   ipcMain.handle('auth:loginOffline', (_event, username) => loginOffline(username));
   ipcMain.handle('auth:loginWithElyBy', (_event, login, password) => loginWithElyBy(login, password));
   
@@ -163,6 +188,35 @@ function registerIpcHandlers(mainWindow) {
     if (result.canceled || result.filePaths.length === 0) return null;
     return result.filePaths[0];
   });
+
+  // ---- Kiểm tra & tải bản cập nhật ----
+  setupUpdater((status) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('update:status', status);
+    }
+  });
+
+  ipcMain.handle('update:check', async () => {
+    try {
+      await checkForUpdates();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e?.message || 'Không thể kiểm tra cập nhật.' };
+    }
+  });
+
+  ipcMain.handle('update:download', async () => {
+    try {
+      await downloadUpdate();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e?.message || 'Không thể tải bản cập nhật.' };
+    }
+  });
+
+  ipcMain.handle('update:install', () => quitAndInstall());
+  ipcMain.handle('update:isPortable', () => isPortableBuild());
+  ipcMain.handle('update:getVersion', () => app.getVersion());
 }
 
 module.exports = { registerIpcHandlers };

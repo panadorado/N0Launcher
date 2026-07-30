@@ -3,9 +3,15 @@ import { renderProfileRow, renderEmptyState } from './pages/version.js';
 import { renderModsBody } from './pages/mods.js';
 import auth from './components/authUI.js';
 import { recommendRamMB } from './utils/ram.js';
+import { escapeHtml } from './utils/html.js';
+import { t, setLocale } from './i18n/index.js';
 
 const {
-  loginWithMicrosoft,
+  loginWithMicrosoftAccount,
+  loginWithMicrosoftAuthentication,
+  logoutMicrosoft,
+  onMicrosoftDeviceCode,
+  openMicrosoftLoginPage,
   loginOffline,
   loginWithElyBy,
   launchGame,
@@ -29,6 +35,12 @@ const {
   deleteMod,
   listResourcePacks,
   openModsFolder,
+  checkForUpdates,
+  downloadUpdate,
+  installUpdate,
+  isPortableBuild,
+  getAppVersion,
+  onUpdateStatus,
 } = window.api;
 
 let currentAccount = null;
@@ -36,6 +48,123 @@ let config = null;
 let isLaunching = false;
 
 let cancelRequestedByUser = false;
+
+// ---- Đăng nhập Microsoft (device code) ----
+let msaLoginInProgress = false;
+let msaLoginAbandoned = false; // true khi người dùng bấm "Huỷ" trên modal
+let currentMsaDeviceCode = null;
+
+onMicrosoftDeviceCode((deviceCode) => {
+  currentMsaDeviceCode = deviceCode;
+  const codeEl = document.getElementById('msa-device-code');
+  if (codeEl) codeEl.textContent = deviceCode.userCode || '------';
+});
+
+// ---- Kiểm tra & tải bản cập nhật ----
+let latestUpdateInfo = null; // { version } — set khi có bản 'available'/'downloaded'
+
+function setUpdateBanner({ title, desc, actionsHtml, percent }) {
+  const banner = document.getElementById('update-banner');
+  if (!banner) return;
+  banner.classList.add('show');
+  const titleEl = document.getElementById('update-banner-title');
+  const descEl = document.getElementById('update-banner-desc');
+  const actionsEl = document.getElementById('update-banner-actions');
+  const progressWrap = document.getElementById('update-banner-progress-wrap');
+  const progressFill = document.getElementById('update-banner-progress-fill');
+  if (titleEl) titleEl.textContent = title || '';
+  if (descEl) descEl.textContent = desc || '';
+  if (actionsEl) actionsEl.innerHTML = actionsHtml || '';
+  if (progressWrap) progressWrap.classList.toggle('show', percent !== undefined);
+  if (progressFill && percent !== undefined) progressFill.style.width = Math.max(0, Math.min(100, percent)) + '%';
+}
+
+function setUpdateSettingsStatus(html) {
+  const box = document.getElementById('update-status');
+  if (box) box.innerHTML = html;
+}
+
+onUpdateStatus((status) => {
+  if (status.status === 'checking') {
+    setUpdateSettingsStatus('Đang kiểm tra cập nhật...');
+  } else if (status.status === 'not-available') {
+    setUpdateSettingsStatus('<span class="status-success"><i class="fas fa-circle-check"></i> Bạn đang dùng bản mới nhất.</span>');
+  } else if (status.status === 'available') {
+    latestUpdateInfo = status;
+    setUpdateSettingsStatus(`<span class="status-info"><i class="fas fa-circle-info"></i> Có bản cập nhật mới v${escapeHtml(status.version)}.</span>`);
+    if (config?.updateCheck?.dismissedVersion === status.version) return; // đã "Để sau" cho đúng bản này
+    setUpdateBanner({
+      title: `Có bản cập nhật mới: v${status.version}`,
+      desc: 'Bạn có muốn tải và cài đặt ngay bây giờ không?',
+      actionsHtml: `
+        <button onclick="window.downloadUpdateUI()" class="btn-update-primary">Cập nhật ngay</button>
+        <button onclick="window.dismissUpdateBanner(true)" class="btn-update-secondary">Để sau</button>
+      `,
+    });
+  } else if (status.status === 'downloading') {
+    setUpdateBanner({
+      title: `Đang tải bản cập nhật${latestUpdateInfo?.version ? ' v' + latestUpdateInfo.version : ''}...`,
+      desc: `${status.percent}%`,
+      actionsHtml: '',
+      percent: status.percent,
+    });
+    setUpdateSettingsStatus(`Đang tải... ${status.percent}%`);
+  } else if (status.status === 'downloaded') {
+    setUpdateBanner({
+      title: 'Đã tải xong bản cập nhật!',
+      desc: 'Khởi động lại để hoàn tất cài đặt.',
+      actionsHtml: `<button onclick="window.installUpdateUI()" class="btn-update-primary">Khởi động lại &amp; Cài đặt</button>`,
+    });
+    setUpdateSettingsStatus('<span class="status-success"><i class="fas fa-circle-check"></i> Đã tải xong — khởi động lại để cài đặt.</span>');
+  } else if (status.status === 'error') {
+    console.error('[update]', status.message);
+    setUpdateSettingsStatus(`<span class="status-error"><i class="fas fa-circle-xmark"></i> ${escapeHtml(status.message)}</span>`);
+  }
+});
+
+window.checkForUpdatesUI = async function() {
+  setUpdateSettingsStatus('Đang kiểm tra...');
+  try {
+    const portable = await isPortableBuild();
+    if (portable) {
+      setUpdateSettingsStatus('<span class="status-info"><i class="fas fa-circle-info"></i> Bản portable không hỗ trợ tự động cập nhật — vui lòng tải bản cài đặt mới nhất thủ công từ trang phát hành.</span>');
+      return;
+    }
+    const res = await checkForUpdates();
+    if (!res.ok) setUpdateSettingsStatus(`<span class="status-error"><i class="fas fa-circle-xmark"></i> ${escapeHtml(res.error)}</span>`);
+  } catch (e) {
+    setUpdateSettingsStatus(`<span class="status-error"><i class="fas fa-circle-xmark"></i> ${escapeHtml(e?.message)}</span>`);
+  }
+};
+
+window.downloadUpdateUI = async function() {
+  setUpdateBanner({ title: 'Đang chuẩn bị tải...', desc: '', actionsHtml: '', percent: 0 });
+  try {
+    const res = await downloadUpdate();
+    if (!res.ok) {
+      setUpdateBanner({ title: 'Không thể tải bản cập nhật', desc: res.error, actionsHtml: `<button onclick="window.downloadUpdateUI()" class="btn-update-secondary">Thử lại</button>` });
+    }
+  } catch (e) {
+    setUpdateBanner({ title: 'Không thể tải bản cập nhật', desc: e?.message || '', actionsHtml: '' });
+  }
+};
+
+window.installUpdateUI = async function() {
+  await installUpdate();
+};
+
+// Đóng banner. `remember=true` (nút "Để sau") ghi nhớ phiên bản đã bỏ qua để
+// không hỏi lại đúng bản đó ở lần mở kế tiếp — nhưng "Kiểm tra cập nhật" thủ
+// công trong Cài đặt vẫn luôn hoạt động bất kể cờ này.
+window.dismissUpdateBanner = async function(remember) {
+  document.getElementById('update-banner')?.classList.remove('show');
+  if (remember && latestUpdateInfo?.version) {
+    config = await loadConfig();
+    config.updateCheck = config.updateCheck || {};
+    config.updateCheck.dismissedVersion = latestUpdateInfo.version;
+    await saveConfig(config);
+  }
+};
 
 // Cache trong bộ nhớ renderer, tránh gọi lại IPC mỗi lần gõ tìm kiếm/lọc.
 let profilesCache = [];
@@ -109,7 +238,10 @@ function findLastProfile() {
 }
 
 // Chuyển trang
+let currentPageName = 'home';
+
 window.showPage = async function(page) {
+  currentPageName = page;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn =>
     btn.getAttribute('onclick')?.includes(page)
@@ -133,13 +265,13 @@ window.showPage = async function(page) {
     authIcon.className = 'fas fa-right-from-bracket';
     authBtn.classList.remove('mode-login');
     authBtn.classList.add('mode-logout');
-    authText.innerHTML = `${currentAccount.name}`;
+    authText.innerHTML = escapeHtml(currentAccount.name);
     authBtn.onclick = async () => await logout();
   } else {
     authIcon.className = 'fas fa-user';
     authBtn.classList.remove('mode-logout');
     authBtn.classList.add('mode-login');
-    authText.innerHTML = 'Đăng nhập';
+    authText.innerHTML = t('common.login');
     authBtn.onclick = () => showPage('login');
   }
 
@@ -154,6 +286,8 @@ window.showPage = async function(page) {
   else if (page === 'settings') {
     profilesCache = profilesCache.length ? profilesCache : await listProfiles();
     content.innerHTML = await renderPage(config, findLastProfile());
+    const versionLabel = document.getElementById('app-version-label');
+    if (versionLabel) versionLabel.textContent = await getAppVersion();
   }
   else if (page === 'login') {
     content.innerHTML = await renderPage(currentAccount, auth);
@@ -558,6 +692,9 @@ window.saveSettings = async function() {
   config.network.useMirror = document.getElementById('use-mirror')?.checked ?? true;
   config.network.proxy = (document.getElementById('proxy-url')?.value || '').trim();
 
+  config.updateCheck = config.updateCheck || {};
+  config.updateCheck.checkOnStartup = document.getElementById('update-check-startup')?.checked ?? true;
+
   await saveConfig(config);
 
   const toast = document.getElementById('settings-toast');
@@ -679,13 +816,26 @@ window.chooseGameFolder = async function() {
   if (input) input.value = dir;
 };
 
-// Đăng nhập bằng tài khoản Microsoft
-window.doMicrosoftLogin = async function() {
+function showMsaModal() {
+  currentMsaDeviceCode = null;
+  msaLoginAbandoned = false;
+  const codeEl = document.getElementById('msa-device-code');
+  if (codeEl) codeEl.textContent = '------';
+  document.getElementById('msa-device-modal')?.classList.add('show');
+}
+
+function hideMsaModal() {
+  document.getElementById('msa-device-modal')?.classList.remove('show');
+}
+
+// Đăng nhập tài khoản Microsoft - bằng popup form login
+// phương pháp trực tiếp từ launcher
+window.doMicrosoftLoginAccount = async function() {
 
   dismissLoginError();
 
   try {
-    currentAccount = await loginWithMicrosoft();
+    currentAccount = await loginWithMicrosoftAccount();
     config.lastAccount = currentAccount;
     await saveConfig(config);
     showPage('home');
@@ -693,6 +843,67 @@ window.doMicrosoftLogin = async function() {
   } catch (error) {
     console.error(error);
     showDialog(error);
+  }
+};
+
+// Đăng nhập bằng tài khoản Microsoft — luồng "device code": không có cửa sổ
+// popup nhúng nào yêu cầu nhập mật khẩu ở đây. Launcher chỉ hiện 1 mã ngắn
+// (nhận qua onMicrosoftDeviceCode ở trên) và chờ người dùng tự xác thực trên
+// trình duyệt hệ thống của họ ở microsoft.com/link.
+window.doMicrosoftLoginAuthentication = async function() {
+  if (msaLoginInProgress) return;
+
+  dismissLoginError();
+  msaLoginInProgress = true;
+  showMsaModal();
+
+  try {
+    const account = await loginWithMicrosoftAuthentication();
+    if (msaLoginAbandoned) return; // người dùng đã bấm Huỷ, bỏ qua kết quả trễ
+
+    currentAccount = account;
+    config.lastAccount = currentAccount;
+    await saveConfig(config);
+    hideMsaModal();
+    showPage('home');
+
+  } catch (error) {
+    console.error(error);
+    hideMsaModal();
+    if (!msaLoginAbandoned) showDialog(error);
+  } finally {
+    msaLoginInProgress = false;
+  }
+};
+
+// Không có API huỷ giữa chừng luồng device code (giới hạn của prismarine-auth)
+// — bấm Huỷ chỉ đóng modal và bỏ qua kết quả trả về trễ, còn yêu cầu xác
+// thực bên phía Microsoft sẽ tự hết hạn sau khoảng 15 phút.
+window.cancelMsaLogin = function() {
+  msaLoginAbandoned = true;
+  hideMsaModal();
+};
+
+window.copyMsaCode = async function() {
+  if (!currentMsaDeviceCode?.userCode) return;
+  try {
+    await navigator.clipboard.writeText(currentMsaDeviceCode.userCode);
+    const btn = document.querySelector('.btn-msa-copy');
+    if (btn) {
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1500);
+    }
+  } catch (e) {
+    console.error('[copyMsaCode]', e);
+  }
+};
+
+window.openMsaLoginPage = async function() {
+  const url = currentMsaDeviceCode?.verificationUri || 'https://www.microsoft.com/link';
+  try {
+    await openMicrosoftLoginPage(url);
+  } catch (e) {
+    console.error('[openMsaLoginPage]', e);
   }
 };
 
@@ -745,15 +956,52 @@ window.doElyByLogin = async function() {
 
 // Đăng xuất
 window.logout = async function() {
+  // Đăng xuất thật sự cho tài khoản Microsoft: xoá cache refresh token, nếu
+  // không lần đăng nhập kế tiếp sẽ tự động dùng lại phiên cũ mà không hiện
+  // mã mới.
+  if (currentAccount?.meta?.type === 'msa') {
+    try { await logoutMicrosoft(); } catch (e) { console.error('[logout]', e); }
+  }
   currentAccount = null;
   config.lastAccount = null;
   await saveConfig(config);
   showPage('login');
 };
 
+// Áp dụng bản dịch cho các phần tĩnh nằm ngoài router (sidebar/nav) — các
+// trang trong #content tự dịch lại mỗi lần render() nên không cần xử lý ở đây.
+function applyStaticTranslations() {
+  const map = {
+    'nav-label-home': 'nav.home',
+    'nav-label-versions': 'nav.versions',
+    'nav-label-mods': 'nav.mods',
+    'nav-label-settings': 'nav.settings',
+    'sidebar-credit': 'sidebar.credit',
+  };
+  for (const [id, key] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t(key);
+  }
+  const authText = document.querySelector('#auth-btn span');
+  if (authText && !currentAccount) authText.innerHTML = t('common.login');
+}
+
+// Đổi ngôn ngữ ngay lập tức: lưu vào config, render lại toàn bộ phần tĩnh +
+// trang đang mở, không cần khởi động lại launcher.
+window.changeLocaleUI = async function(locale) {
+  setLocale(locale);
+  applyStaticTranslations();
+  config = await loadConfig();
+  config.locale = locale;
+  await saveConfig(config);
+  await showPage(currentPageName);
+};
+
 // Khởi động
 (async function init() {
   config = await loadConfig();
+  setLocale(config.locale || 'vi');
+  applyStaticTranslations();
   if (config.lastAccount) {
     currentAccount = config.lastAccount;
   }

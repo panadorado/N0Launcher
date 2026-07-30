@@ -1,0 +1,9 @@
+{
+  "auth.msaLoginFailed": "Microsoft sign-in failed. Please try again.",
+  "auth.msaNoProfile": "Could not fetch a Minecraft profile for this account. It may not own Minecraft Java Edition yet, or the account still needs to be migrated/have a character created.",
+  "auth.offlineInvalidUsername": "Name may only contain letters, digits and underscores (3-16 characters).",
+  "auth.elybyMissingCredentials": "Please enter both your ely.by username and password.",
+  "auth.elybyNetworkError": "Could not connect to ely.by. Please check your network and try again.",
+  "auth.elybyLoginFailed": "ely.by sign-in failed. Please check your account/password.",
+  "auth.elybyNoProfile": "This ely.by account has no Minecraft character linked yet."
+}

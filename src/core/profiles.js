@@ -74,7 +74,11 @@ function removeProfile(config, profileId) {
  *   khác (ví dụ mods Forge 1.20.1 sẽ không nằm chung với mods Fabric 1.21.3).
  */
 function getProfileGameDir(config, profile) {
-  const root = path.resolve(config.root || path.join(app.getPath('userData'), 'minecraft'));
+  // Fallback này chỉ chạy nếu config.root bị thiếu — về lý thuyết không xảy
+  // ra vì loadConfig() luôn merge defaultConfig trước, nhưng vẫn giữ nhất
+  // quán với default (%APPDATA%/.minecraft) để khớp quy ước của các launcher
+  // khác, thay vì rơi về "userData/minecraft" (không dấu chấm) như trước.
+  const root = path.resolve(config.root || path.join(app.getPath('userData'), '../.minecraft'));
   if (!profile || profile.loader === 'vanilla' || !profile.dirName) return root;
   return path.join(root, profile.dirName);
 }

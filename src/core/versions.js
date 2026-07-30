@@ -1,5 +1,59 @@
 const supportedVersions = [
     {
+        id: '26.2',
+        name: '26.2',
+        type: 'release',
+        label: 'Chaos Cubed',
+        color: 'yellow',
+        features: [
+            { icon: 'fa-mountain', text: 'Sulfur Caves — biôm hang động mới với dải sulfur & cinnabar' },
+            { icon: 'fa-cube', text: 'Sulfur Cube — mob hấp thụ khối và thay đổi tính chất vật lý' },
+            { icon: 'fa-gem', text: 'Bộ khối Sulfur & Cinnabar mới (stairs, slab, wall, polished...)' },
+            { icon: 'fa-fire', text: 'Potent Sulfur & Geyser — tạo khí độc và phun nước mạnh' },
+            { icon: 'fa-users', text: 'Friends List chính thức + hỗ trợ Vulkan experimental' },
+        ],
+    },
+    {
+        id: '26.1.2',
+        name: '26.1.2',
+        type: 'release',
+        label: 'Hotfix',
+        color: 'gray',
+        features: [
+            { icon: 'fa-bug', text: 'Sửa lỗi Spectator mode tấn công được người chơi khác' },
+            { icon: 'fa-check-square', text: 'Cải thiện tooltip của checkbox trong giao diện báo cáo' },
+            { icon: 'fa-shield-alt', text: 'Tăng độ ổn định và vá lỗ hổng quan trọng' },
+        ],
+    },
+
+    {
+        id: '26.1.1',
+        name: '26.1.1',
+        type: 'release',
+        label: 'Hotfix',
+        color: 'gray',
+        features: [
+            { icon: 'fa-comment', text: 'Sửa lỗi không thể báo cáo tin nhắn chat (MC-307140)' },
+            { icon: 'fa-users', text: 'Khôi phục chức năng báo cáo chat khi chat đang bật' },
+            { icon: 'fa-bug', text: 'Hotfix nhỏ, tương thích với server 26.1' },
+        ],
+    },
+
+    {
+        id: '26.1',
+        name: '26.1',
+        type: 'release',
+        label: 'Tiny Takeover',
+        color: 'yellow',
+        features: [
+            { icon: 'fa-baby', text: 'Toàn bộ baby mob được làm lại model & texture dễ thương hơn' },
+            { icon: 'fa-seedling', text: 'Golden Dandelion — dừng/tiếp tục quá trình lớn của baby mob' },
+            { icon: 'fa-tag', text: 'Name Tag có thể chế tạo được từ giấy + bất kỳ nugget nào' },
+            { icon: 'fa-music', text: 'Note Block đặt trên Copper Block phát âm thanh trumpet' },
+            { icon: 'fa-code', text: 'Phiên bản đầu tiên yêu cầu Java 25 + format phiên bản mới YY.D' },
+        ],
+    },
+    {
         id: '1.21.3',
         name: '1.21.3 (Latest)',
         type: 'release',

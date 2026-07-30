@@ -1,3 +1,6 @@
+import { escapeHtml } from '../utils/html.js';
+import { t } from '../i18n/index.js';
+
 // Trang chủ. Chạy trong renderer (browser), không cần Node/IPC.
 //
 // getVersionList được truyền vào là window.api.getVersionList (một lời gọi
@@ -143,8 +146,8 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
           <h2 class="hero-title">Minecraft Java Edition!</h2>
           <p class="hero-subtitle">
             ${isLoggedIn
-              ? `Đang đăng nhập: <span class="account-name">${currentAccount.name}</span> <span>(${accountType})</span>`
-              : `Bạn chưa đăng nhập.`}
+              ? `${t('home.loggedInAs')} <span class="account-name">${escapeHtml(currentAccount.name)}</span> <span>(${escapeHtml(accountType)})</span>`
+              : t('home.notLoggedIn')}
           </p>
         </div>
       </div>
@@ -154,27 +157,27 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
         ${lastProfile ? `
           <div class="preview-header">
             <div>
-              <p class="preview-label">Xem trước phiên bản</p>
+              <p class="preview-label">${t('home.previewLabel')}</p>
               <h3 class="preview-title">
                 <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
                   <i class="fas fa-cube"></i>
-                  ${selectedVersion}
+                  ${escapeHtml(selectedVersion)}
                 </span>
                 ${versionInfo ? `
                   <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
                     <i class="fa-solid fa-tag"></i>
-                    ${!versionInfo.label ? minecraftUpdates[randomIndex] : versionInfo.label}
+                    ${escapeHtml(!versionInfo.label ? minecraftUpdates[randomIndex] : versionInfo.label)}
                   </span>` : ''
                 }
                <span class="version-badge ${versionBadgeModLoader(lastProfile.loader)}">
                 <i class="${MODLOADER_ICON_NAME[lastProfile.name.match(/^[^\s]+/)[0]]}"></i>
-                ${lastProfile.name}
+                ${escapeHtml(lastProfile.name)}
                </span>
               </h3>
             </div>
             <button id="play-main-btn" onclick="startGame()">
               <i id="play-btn-icon" class="fas fa-play"></i>
-              <span id="play-btn-text">Bắt đầu</span>
+              <span id="play-btn-text">${t('common.start')}</span>
             </button>
           </div>
 
@@ -194,14 +197,14 @@ export async function renderHome(currentAccount, config, getVersionList, lastPro
           ` : `
             <div class="empty-state">
               <i class="fas fa-circle-info text-2xl"></i>
-              <p class="text-sm">Chưa có thông tin tính năng nổi bật cho phiên bản này. Bạn vẫn có thể bấm "Bắt đầu" để khởi chạy.</p>
+              <p class="text-sm">${t('home.noFeatureInfo')}</p>
             </div>
           `}
         ` : `
           <div class="empty-state full">
             <i class="fas fa-cube text-4xl"></i>
-            <p class="title">Chưa chọn phiên bản</p>
-            <p class="desc">Bấm nút "Chọn phiên bản" ở trên để xem tính năng nổi bật.</p>
+            <p class="title">${t('home.noProfileTitle')}</p>
+            <p class="desc">${t('home.noProfileDesc')}</p>
           </div>
         `}
       </div>

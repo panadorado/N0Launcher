@@ -4,11 +4,11 @@ const { app } = require('electron');
 const profiles = require('./profiles')
 
 const userDataDir = app.getPath('userData');
-const configPath = path.join(userDataDir, 'launcher_config.json');
+const configPath = path.join(userDataDir, '../.minecraft', 'launcher_config.json');
 
 const defaultConfig = {
-  root: path.join(userDataDir, 'minecraft'),
-  version: '1.21.3', // giữ lại để tương thích ngược, không còn dùng trực tiếp để launch
+  root: path.join(userDataDir, '../.minecraft'),
+  version: '26.2', // giữ lại để tương thích ngược, không còn dùng trực tiếp để launch
   memory: { min: 2048, max: 6144 },
   lastAccount: null,
   javaPath: null,
@@ -20,6 +20,14 @@ const defaultConfig = {
     useMirror: true,
     proxy: '',
   },
+  updateCheck: {
+    checkOnStartup: true,
+    // Ghi lại phiên bản người dùng đã bấm "Để sau" để không hiện lại thông
+    // báo cho ĐÚNG bản đó ở lần mở kế tiếp — nhưng vẫn cho kiểm tra lại thủ
+    // công bất cứ lúc nào (nút "Kiểm tra cập nhật" trong Cài đặt bỏ qua cờ này).
+    dismissedVersion: null,
+  },
+  locale: 'vi',
 };
 
 function migrateLegacyVersion(config) {

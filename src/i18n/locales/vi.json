@@ -1,0 +1,9 @@
+{
+  "auth.msaLoginFailed": "Đăng nhập Microsoft thất bại. Vui lòng thử lại.",
+  "auth.msaNoProfile": "Không lấy được hồ sơ Minecraft cho tài khoản này. Tài khoản có thể chưa sở hữu Minecraft Java Edition, hoặc chưa migrate/tạo nhân vật.",
+  "auth.offlineInvalidUsername": "Tên chỉ gồm chữ, số, dấu gạch dưới (3-16 ký tự).",
+  "auth.elybyMissingCredentials": "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu ely.by.",
+  "auth.elybyNetworkError": "Không thể kết nối tới ely.by. Vui lòng kiểm tra mạng và thử lại.",
+  "auth.elybyLoginFailed": "Đăng nhập ely.by thất bại. Vui lòng kiểm tra lại tài khoản/mật khẩu.",
+  "auth.elybyNoProfile": "Tài khoản ely.by này chưa có nhân vật Minecraft nào được liên kết."
+}

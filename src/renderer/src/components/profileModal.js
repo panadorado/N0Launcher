@@ -1,3 +1,5 @@
+import { t } from '../i18n/index.js';
+
 function tabButton(id, icon, label) {
   return `
     <button onclick="window.switchProfileTab('${id}')" data-tab="${id}" class="profile-tab-btn">
@@ -11,7 +13,7 @@ export function renderNewProfileModal() {
     <div class="modal-box">
 
       <div class="modal-header">
-        <h3 class="modal-title"><i class="fas fa-cube"></i> Cấu hình mới</h3>
+        <h3 class="modal-title"><i class="fas fa-cube"></i> ${t('profileModal.title')}</h3>
         <button onclick="window.closeNewProfileModal()" class="modal-close-btn">
           <i class="fas fa-xmark"></i>
         </button>
@@ -25,23 +27,23 @@ export function renderNewProfileModal() {
       </div>
 
       <div class="modal-body">
-        <label class="modal-label">Tên cấu hình (tuỳ chọn)</label>
-        <input id="new-profile-name" type="text" placeholder="Ví dụ: Sinh tồn Forge 1.20.1" />
+        <label class="modal-label">${t('profileModal.nameLabel')}</label>
+        <input id="new-profile-name" type="text" placeholder="${t('profileModal.namePlaceholder')}" />
 
         <!-- Vanilla -->
         <div id="panel-vanilla" class="loader-panel">
           <div class="panel-box panel-vanilla">
-            <p class="panel-desc"><i class="fas fa-cube"></i> Minecraft gốc — không có mod, ổn định nhất.</p>
+            <p class="panel-desc"><i class="fas fa-cube"></i> ${t('profileModal.vanillaDesc')}</p>
             <div class="panel-checkboxes">
               <label class="panel-checkbox-label">
-                <input type="checkbox" id="vanilla-show-release" checked onchange="window.reloadVanillaVersions()" /> Phát hành
+                <input type="checkbox" id="vanilla-show-release" checked onchange="window.reloadVanillaVersions()" /> ${t('versions.filter.release')}
               </label>
               <label class="panel-checkbox-label">
-                <input type="checkbox" id="vanilla-show-snapshot" onchange="window.reloadVanillaVersions()" /> Bản thử nghiệm
+                <input type="checkbox" id="vanilla-show-snapshot" onchange="window.reloadVanillaVersions()" /> ${t('versions.filter.snapshot')}
               </label>
             </div>
             <select id="vanilla-version-select" class="panel-select">
-              <option>Đang tải danh sách...</option>
+              <option>${t('profileModal.loading')}</option>
             </select>
           </div>
         </div>
@@ -49,14 +51,14 @@ export function renderNewProfileModal() {
         <!-- Forge -->
         <div id="panel-forge" class="loader-panel">
           <div class="panel-box panel-forge">
-            <p class="panel-desc"><i class="fas fa-hammer"></i> Forge — hệ mod lâu đời nhất, kho mod khổng lồ.</p>
-            <label class="panel-select-label">Phiên bản Minecraft</label>
+            <p class="panel-desc"><i class="fas fa-hammer"></i> ${t('profileModal.forgeDesc')}</p>
+            <label class="panel-select-label">${t('profileModal.mcVersionLabel')}</label>
             <select id="forge-mc-select" onchange="window.reloadForgeBuilds()" class="panel-select">
-              <option>Đang tải danh sách...</option>
+              <option>${t('profileModal.loading')}</option>
             </select>
             <label class="panel-select-label">Phiên bản Forge</label>
             <select id="forge-build-select" class="panel-select">
-              <option>Chọn phiên bản Minecraft trước</option>
+              <option>${t('profileModal.chooseMcFirst')}</option>
             </select>
           </div>
         </div>
@@ -64,14 +66,14 @@ export function renderNewProfileModal() {
         <!-- NeoForge -->
         <div id="panel-neoforge" class="loader-panel">
           <div class="panel-box panel-neoforge">
-            <p class="panel-desc"><i class="fas fa-fire"></i> NeoForge — nhánh kế thừa hiện đại, tối ưu hơn Forge cũ.</p>
-            <label class="panel-select-label">Phiên bản Minecraft</label>
+            <p class="panel-desc"><i class="fas fa-fire"></i> ${t('profileModal.neoforgeDesc')}</p>
+            <label class="panel-select-label">${t('profileModal.mcVersionLabel')}</label>
             <select id="neoforge-mc-select" onchange="window.reloadNeoForgeBuilds()" class="panel-select">
-              <option>Đang tải danh sách...</option>
+              <option>${t('profileModal.loading')}</option>
             </select>
             <label class="panel-select-label">Phiên bản NeoForge</label>
             <select id="neoforge-build-select" class="panel-select">
-              <option>Chọn phiên bản Minecraft trước</option>
+              <option>${t('profileModal.chooseMcFirst')}</option>
             </select>
           </div>
         </div>
@@ -79,14 +81,14 @@ export function renderNewProfileModal() {
         <!-- Fabric -->
         <div id="panel-fabric" class="loader-panel">
           <div class="panel-box panel-fabric">
-            <p class="panel-desc"><i class="fas fa-layer-group"></i> Fabric — nhẹ, khởi động nhanh, hợp mod hiệu năng/công nghệ.</p>
-            <label class="panel-select-label">Phiên bản Minecraft</label>
+            <p class="panel-desc"><i class="fas fa-layer-group"></i> ${t('profileModal.fabricDesc')}</p>
+            <label class="panel-select-label">${t('profileModal.mcVersionLabel')}</label>
             <select id="fabric-mc-select" onchange="window.reloadFabricBuilds()" class="panel-select">
-              <option>Đang tải danh sách...</option>
+              <option>${t('profileModal.loading')}</option>
             </select>
             <label class="panel-select-label">Phiên bản Fabric Loader</label>
             <select id="fabric-build-select" class="panel-select">
-              <option>Chọn phiên bản Minecraft trước</option>
+              <option>${t('profileModal.chooseMcFirst')}</option>
             </select>
           </div>
         </div>
@@ -97,9 +99,9 @@ export function renderNewProfileModal() {
       </div>
 
       <div class="modal-footer">
-        <button onclick="window.closeNewProfileModal()" class="btn-cancel">Huỷ</button>
+        <button onclick="window.closeNewProfileModal()" class="btn-cancel">${t('common.cancel')}</button>
         <button onclick="window.submitNewProfile()" class="btn-create">
-          <i class="fas fa-check"></i> Tạo cấu hình
+          <i class="fas fa-check"></i> ${t('profileModal.create')}
         </button>
       </div>
     </div>

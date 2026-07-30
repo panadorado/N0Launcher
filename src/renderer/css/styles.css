@@ -5,6 +5,7 @@
 @import "pageLogin.css";
 @import "pageVersion.css";
 @import "pageSetting.css";
+@import "updateBanner.css";
 
 * {
   margin: 0;
