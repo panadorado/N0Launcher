@@ -70,6 +70,7 @@ function setupRendererLogging(win) {
 
 // Yêu cầu khóa single instance
 const gotTheLock = app.requestSingleInstanceLock();
+const openDevTool = false;
 
 if (!gotTheLock) {
   app.quit();
@@ -92,7 +93,7 @@ if (!gotTheLock) {
       minHeight: 798,
       autoHideMenuBar: true,
       webPreferences: {
-        devTools: false,
+        devTools: openDevTool,
         preload: path.join(__dirname, '../preload/index.js'),
         nodeIntegration: false,
         contextIsolation: true
@@ -101,7 +102,7 @@ if (!gotTheLock) {
     });
 
     mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
-    // mainWindow.webContents.openDevTools();
+    if(openDevTool) mainWindow.webContents.openDevTools();
 
     // Giải nén/tải file lớn (native libs, assets, Forge/NeoForge installer...)
     // có thể đẩy renderer tới giới hạn bộ nhớ và khiến tiến trình renderer bị

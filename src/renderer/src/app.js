@@ -5,6 +5,7 @@ import auth from './components/authUI.js';
 import { recommendRamMB } from './utils/ram.js';
 import { escapeHtml } from './utils/html.js';
 import { t, setLocale } from './i18n/index.js';
+import { version } from '../../../package.json'
 
 const {
   loginWithMicrosoftAccount,
@@ -999,6 +1000,10 @@ window.changeLocaleUI = async function(locale) {
 
 // Khởi động
 (async function init() {
+
+  const versionLauncher = document.querySelector('.version');
+  versionLauncher.innerHTML = `v${version}`;
+
   config = await loadConfig();
   setLocale(config.locale || 'vi');
   applyStaticTranslations();

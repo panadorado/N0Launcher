@@ -20,10 +20,10 @@ export function renderNewProfileModal() {
       </div>
 
       <div class="modal-tabs">
-        ${tabButton('vanilla', 'fa-cube', 'Vanilla')}
-        ${tabButton('forge', 'fa-hammer', 'Forge')}
-        ${tabButton('neoforge', 'fa-fire', 'NeoForge')}
-        ${tabButton('fabric', 'fa-layer-group', 'Fabric')}
+        ${tabButton('vanilla', 'fa-brands fa-bitbucket', 'Vanilla')}
+        ${tabButton('forge', 'fas fa-hammer', 'Forge')}
+        ${tabButton('neoforge', 'fab fa-gitlab', 'NeoForge')}
+        ${tabButton('fabric', 'fas fa-layer-group', 'Fabric')}
       </div>
 
       <div class="modal-body">
@@ -66,7 +66,7 @@ export function renderNewProfileModal() {
         <!-- NeoForge -->
         <div id="panel-neoforge" class="loader-panel">
           <div class="panel-box panel-neoforge">
-            <p class="panel-desc"><i class="fas fa-fire"></i> ${t('profileModal.neoforgeDesc')}</p>
+            <p class="panel-desc"><i class="fab fa-gitlab"></i> ${t('profileModal.neoforgeDesc')}</p>
             <label class="panel-select-label">${t('profileModal.mcVersionLabel')}</label>
             <select id="neoforge-mc-select" onchange="window.reloadNeoForgeBuilds()" class="panel-select">
               <option>${t('profileModal.loading')}</option>
