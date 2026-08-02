@@ -6,11 +6,10 @@
 
 ## Tính năng chính
 
-  - Giao diện dark theme đẹp mắt, dễ sử dụng.
-  - Hỗ trợ tiếng Việt hoàn toàn.
+  - Giao diện đơn giản, dễ sử dụng.
+  - Hổ trợ đa ngôn ngữ (hiện tại chỉ có EN, VI)
   - Hỗ trợ **Vanilla**, **Forge**, **NeoForge**, **Fabric**.
   - Tạo cấu hình mới dễ dàng (phiên bản chính thức / thử nghiệm).
-  - Quản lý nhiều cấu hình (instance) khác nhau.
   - Bật/tắt mod nhanh chóng bằng công tắc.
   - Mở thư mục mods trực tiếp từ launcher.
   - Hỗ trợ Resource Packs.
@@ -19,9 +18,6 @@
   - Hỗ trợ Mirror tải xuống (tự động chuyển khi Mojang chậm/lỗi).
   - Hỗ trợ Proxy (tùy chọn).
   - Hỗ trợ đăng nhập Microsoft (Online) và Offline.
-  - Nút “Bắt đầu” lớn, dễ nhìn.
-  - Xem trước phiên bản đang chọn.
-
 ---
 
 ### Core Dependencies
@@ -54,7 +50,7 @@
 
 ## Chú ý
 
-Vì N0Launcher được phát triển bởi **một cá nhân** (không phải team lớn), nên hiện tại vẫn còn một số hạn chế:
+Vì N0Launcher được phát triển bởi **một cá nhân** với một nhóm nhỏ bạn bè, nên hiện tại vẫn còn một số hạn chế:
 
 - **Tính năng còn hạn chế** so với các launcher lớn (Prism Launcher, XMCL, MultiMC...).
 - **Chưa hỗ trợ** CurseForge / Modrinth tích hợp sẵn (phải tải mod thủ công).
@@ -62,16 +58,6 @@ Vì N0Launcher được phát triển bởi **một cá nhân** (không phải t
 - **Giao diện** còn đơn giản, thiếu nhiều tùy chỉnh nâng cao.
 - **Hỗ trợ** chỉ tập trung vào Windows (macOS & Linux chưa được kiểm thử kỹ).
 - Có thể gặp lỗi nhỏ khi Minecraft cập nhật version mới (vì phụ thuộc vào các core library).
-
----
-
-## Cài đặt & Sử dụng
-
-1. Tải bản phát hành mới nhất từ [Releases](https://github.com/panadorado/minecraft_n0launcher/releases/tag/v1.0.3).
-2. Giải nén / cài đặt.
-3. Chạy `N0Launcher.exe`.
-4. Đăng nhập Microsoft hoặc dùng Offline.
-5. Tạo cấu hình phiên bản → thêm mods (nếu cần) → Bắt đầu chơi!
 
 ---
 
