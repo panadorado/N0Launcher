@@ -93,7 +93,7 @@ npm run build
 
 ## 📌 Liên kết hữu ích
 
-- 🌐 Website: [n0launcher.meely.com.vn](https://n0launcher.meely.com.vn) *(nếu đã deploy)*
+- 🌐 Website: [n0launcher.meely.com.vn](https://n0launcher.meely.com.vn) 
 - 📦 [Tất cả phiên bản Releases](https://github.com/panadorado/N0Launcher/releases)
 - 🐛 [Báo lỗi / Góp ý](https://github.com/panadorado/N0Launcher/issues)
 - ⭐ Star repo nếu bạn thấy hữu ích!
