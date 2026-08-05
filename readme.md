@@ -63,3 +63,49 @@ npm start
 
 # Build production (Windows)
 npm run build
+```
+
+---
+
+## 📦 Công nghệ sử dụng
+
+| Package              | Mục đích                     |
+|----------------------|------------------------------|
+| Electron             | Desktop app                  |
+| Node.js + Vite       | Core & build                 |
+| @xmcl/core           | Minecraft core               |
+| @xmcl/installer      | Cài đặt phiên bản & modloader|
+| @xmcl/mod-parser     | Đọc thông tin mods           |
+| @xmcl/resourcepack   | Resource packs               |
+| msmc / prismarine-auth | Đăng nhập Microsoft        |
+| undici               | HTTP client nhanh            |
+
+---
+
+## 🌟 Tại sao chọn N0Launcher?
+
+- **Nhẹ & nhanh** – không nặng như các launcher lớn
+- **Giao diện tiếng Việt hoàn toàn** – dễ dùng cho người Việt
+- **Mã nguồn mở** – minh bạch, không telemetry
+- **Phát triển liên tục** bởi cá nhân đam mê Minecraft
+
+---
+
+## 📌 Liên kết hữu ích
+
+- 🌐 Website: [n0launcher.meely.com.vn](https://n0launcher.meely.com.vn) *(nếu đã deploy)*
+- 📦 [Tất cả phiên bản Releases](https://github.com/panadorado/N0Launcher/releases)
+- 🐛 [Báo lỗi / Góp ý](https://github.com/panadorado/N0Launcher/issues)
+- ⭐ Star repo nếu bạn thấy hữu ích!
+
+---
+
+## ⚠️ Lưu ý
+
+N0Launcher được phát triển bởi **một cá nhân**, vẫn đang trong quá trình hoàn thiện. Một số tính năng còn hạn chế so với Prism Launcher / XMCL / MultiMC. Rất mong nhận được góp ý từ cộng đồng!
+
+---
+
+**N0Launcher** – Minecraft Launcher tối giản dành cho người chơi Việt Nam.  
+Made with ❤️ by [panadorado](https://github.com/panadorado)
+```
