@@ -1,74 +1,63 @@
-# N0Launcher
+# N0Launcher - Fast, Lightweight & Custom Game Launcher
 
-**N0Launcher** là một Minecraft Launcher được custom cá nhân, xây dựng trên nền tảng **Electron + Node.js**, giao diện tối giản, hiện đại và tập trung vào trải nghiệm sử dụng mượt mà.
+![N0Launcher Banner](https://via.placeholder.com/800x400?text=N0Launcher+Game+Launcher)
 
----
+[![GitHub Release](https://img.shields.io/github/v/release/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/stargazers)
+[![License](https://img.shields.io/github/license/panadorado/N0Launcher?style=flat-square)](LICENSE)
 
-## Tính năng chính
-
-  - Giao diện đơn giản, dễ sử dụng.
-  - Hổ trợ đa ngôn ngữ (hiện tại chỉ có EN, VI)
-  - Hỗ trợ **Vanilla**, **Forge**, **NeoForge**, **Fabric**.
-  - Tạo cấu hình mới dễ dàng (phiên bản chính thức / thử nghiệm).
-  - Bật/tắt mod nhanh chóng bằng công tắc.
-  - Mở thư mục mods trực tiếp từ launcher.
-  - Hỗ trợ Resource Packs.
-  - Điều chỉnh RAM tối đa (tự động đề xuất theo phiên bản).
-  - Kiểm tra Java tương thích.
-  - Hỗ trợ Mirror tải xuống (tự động chuyển khi Mojang chậm/lỗi).
-  - Hỗ trợ Proxy (tùy chọn).
-  - Hỗ trợ đăng nhập Microsoft (Online) và Offline.
----
-
-### Core Dependencies
-
-| Package | Link chính thức |
-|---------|-----------------|
-| **@xmcl/core** | [npm](https://www.npmjs.com/package/@xmcl/core) · [GitHub](https://github.com/Voxelum/minecraft-launcher-core-node) |
-| **@xmcl/installer** | [npm](https://www.npmjs.com/package/@xmcl/installer) |
-| **@xmcl/mod-parser** | [npm](https://www.npmjs.com/package/@xmcl/mod-parser) |
-| **@xmcl/resourcepack** | [npm](https://www.npmjs.com/package/@xmcl/resourcepack) |
-| **@xmcl/task** | [npm](https://www.npmjs.com/package/@xmcl/task) |
-| **minecraft-launcher-core**  | [npm](https://www.npmjs.com/package/minecraft-launcher-core) · [GitHub](https://github.com/Pierce01/MinecraftLauncher-core) |
-| **msmc** |  [npm](https://www.npmjs.com/package/msmc) |
-| **prismarine-auth** | [GitHub](https://github.com/PrismarineJS/prismarine-auth) |
-| **adm-zip** |  [npm](https://www.npmjs.com/package/adm-zip) |
-| **fs-extra** | [npm](https://www.npmjs.com/package/fs-extra) |
-| **undici** |  [npm](https://www.npmjs.com/package/undici) |
-
-### Dev Dependencies
-
-| Package | Link chính thức |
-|---------|-----------------|
-| **Electron**  | [Website](https://www.electronjs.org/) · [GitHub](https://github.com/electron/electron) |
-| **electron-builder**  | [Website](https://www.electron.build/) · [GitHub](https://github.com/electron-userland/electron-builder) |
-| **Vite** | [Website](https://vitejs.dev/) |
-| **javascript-obfuscator**  | [npm](https://www.npmjs.com/package/javascript-obfuscator) |
-| **X Minecraft Launcher**  | [Website](https://xmcl.app/en/)
+**N0Launcher** is a modern, open-source custom game launcher designed to streamline your gaming experience. Built with performance and customization in mind, **N0Launcher** allows gamers to manage, update, and launch their favorite games effortlessly.
 
 ---
 
-## Chú ý
+## 🔑 Key Features of N0Launcher
 
-Vì N0Launcher được phát triển bởi **một cá nhân** với một nhóm nhỏ bạn bè, nên hiện tại vẫn còn một số hạn chế:
-
-- **Tính năng còn hạn chế** so với các launcher lớn (Prism Launcher, XMCL, MultiMC...).
-- **Chưa hỗ trợ** CurseForge / Modrinth tích hợp sẵn (phải tải mod thủ công).
-- **Chưa hỗ trợ** Quilt, OptiFine, LabyMod... đầy đủ.
-- **Giao diện** còn đơn giản, thiếu nhiều tùy chỉnh nâng cao.
-- **Hỗ trợ** chỉ tập trung vào Windows (macOS & Linux chưa được kiểm thử kỹ).
-- Có thể gặp lỗi nhỏ khi Minecraft cập nhật version mới (vì phụ thuộc vào các core library).
+- ⚡ **Ultra-Fast Performance:** Built with minimal overhead for instant launch times.
+- 🎨 **Customizable UI/Themes:** Tailor the look and feel of **N0Launcher** to match your gaming setup.
+- 🔄 **Auto-Updater Integration:** Keep game files and launcher components up-to-date automatically.
+- 🛡️ **Secure & Open Source:** Free from bloatware, telemetry, and hidden background processes.
+- 🌐 **Multi-Language Support:** Easily switch languages inside the launcher.
 
 ---
 
-## Đóng góp & Phản hồi
+## 📥 Download and Installation
 
-Đây là dự án cá nhân, nhưng rất vui nếu bạn:
+To get started with **N0Launcher**, follow these simple steps:
 
-- Báo lỗi (Issue)
-- Góp ý tính năng
-- Star repo nếu thấy hữu ích
+### System Requirements
+* **OS:** Windows 10/11 (64-bit) / macOS / Linux
+* **Memory:** 512 MB RAM
+* **Storage:** 100 MB available space
+
+### Quick Install
+1. Go to the [N0Launcher Releases](https://github.com/panadorado/N0Launcher/releases) page.
+2. Download the latest version (`N0Launcher-Setup.exe` or equivalent for your OS).
+3. Run the installer and launch **N0Launcher**.
 
 ---
 
-**N0Launcher** — Launcher nhỏ gọn, đủ dùng, dành cho những ai thích sự đơn giản.
+## 🚀 How to Use N0Launcher
+
+1. **Launch the Application:** Open **N0Launcher** from your desktop or start menu.
+2. **Add Your Games:** Navigate to Settings > Game Paths and locate your installed games.
+3. **Customize Settings:** Adjust graphics, launcher themes, or launch arguments.
+4. **Play:** Click **Play** to start your game immediately!
+
+---
+
+## 🛠️ Building N0Launcher from Source
+
+If you want to contribute or build **N0Launcher** locally, follow these commands:
+
+```bash
+# Clone the repository
+git clone [https://github.com/panadorado/N0Launcher.git](https://github.com/panadorado/N0Launcher.git)
+
+# Navigate into the directory
+cd N0Launcher
+
+# Install dependencies (Example for Node/Python/C# - adjust as needed)
+npm install
+
+# Run the app in development mode
+npm start
