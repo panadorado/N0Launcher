@@ -42,8 +42,6 @@
 
 ## 🖼️ Giao diện N0Launcher
 
-*(Thêm ảnh screenshot thật của bạn vào đây để tăng tỷ lệ click & SEO)*
-
 | Đăng nhập | Giao diện chính | Quản lý Mods |
 |-----------|------------------|--------------|
 | ![Login](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-1.png) | ![Main](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-2.png) | ![Mods](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-3.png) |
