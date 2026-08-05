@@ -1,6 +1,6 @@
 # N0Launcher - Fast, Lightweight & Custom Game Launcher
 
-![N0Launcher Banner](https://via.placeholder.com/800x400?text=N0Launcher+Game+Launcher)
+![N0Launcher Banner](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-2.png)
 
 [![GitHub Release](https://img.shields.io/github/v/release/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/releases)
 [![GitHub Stars](https://img.shields.io/github/stars/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/stargazers)
