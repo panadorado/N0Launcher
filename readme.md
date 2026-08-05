@@ -1,63 +1,67 @@
-# N0Launcher - Fast, Lightweight & Custom Game Launcher
+# N0Launcher – Minecraft Launcher tối giản & hiện đại
 
-![N0Launcher Banner](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-2.png)
+**N0Launcher** là Minecraft Launcher mã nguồn mở được xây dựng bằng **Electron + Node.js**, giao diện tối giản, hoàn toàn tiếng Việt, hỗ trợ **Vanilla · Forge · NeoForge · Fabric**.
 
-[![GitHub Release](https://img.shields.io/github/v/release/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/releases)
-[![GitHub Stars](https://img.shields.io/github/stars/panadorado/N0Launcher?style=flat-square)](https://github.com/panadorado/N0Launcher/stargazers)
-[![License](https://img.shields.io/github/license/panadorado/N0Launcher?style=flat-square)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/panadorado/N0Launcher?style=for-the-badge&logo=github)](https://github.com/panadorado/N0Launcher/releases)
+[![GitHub Stars](https://img.shields.io/github/stars/panadorado/N0Launcher?style=for-the-badge)](https://github.com/panadorado/N0Launcher/stargazers)
+[![Downloads](https://img.shields.io/github/downloads/panadorado/N0Launcher/total?style=for-the-badge)](https://github.com/panadorado/N0Launcher/releases)
+[![License](https://img.shields.io/github/license/panadorado/N0Launcher?style=for-the-badge)](LICENSE)
 
-**N0Launcher** is a modern, open-source custom game launcher designed to streamline your gaming experience. Built with performance and customization in mind, **N0Launcher** allows gamers to manage, update, and launch their favorite games effortlessly.
-
----
-
-## 🔑 Key Features of N0Launcher
-
-- ⚡ **Ultra-Fast Performance:** Built with minimal overhead for instant launch times.
-- 🎨 **Customizable UI/Themes:** Tailor the look and feel of **N0Launcher** to match your gaming setup.
-- 🔄 **Auto-Updater Integration:** Keep game files and launcher components up-to-date automatically.
-- 🛡️ **Secure & Open Source:** Free from bloatware, telemetry, and hidden background processes.
-- 🌐 **Multi-Language Support:** Easily switch languages inside the launcher.
+> **N0Launcher** – Minecraft Launcher cá nhân tối giản, hiện đại dành cho người chơi Việt Nam.  
+> Hỗ trợ đăng nhập **Microsoft · Ely.by · Offline**, quản lý mods & resource packs ngay trong app.
 
 ---
 
-## 📥 Download and Installation
+## ✨ Tính năng nổi bật của N0Launcher
 
-To get started with **N0Launcher**, follow these simple steps:
-
-### System Requirements
-* **OS:** Windows 10/11 (64-bit) / macOS / Linux
-* **Memory:** 512 MB RAM
-* **Storage:** 100 MB available space
-
-### Quick Install
-1. Go to the [N0Launcher Releases](https://github.com/panadorado/N0Launcher/releases) page.
-2. Download the latest version (`N0Launcher-Setup.exe` or equivalent for your OS).
-3. Run the installer and launch **N0Launcher**.
-
----
-
-## 🚀 How to Use N0Launcher
-
-1. **Launch the Application:** Open **N0Launcher** from your desktop or start menu.
-2. **Add Your Games:** Navigate to Settings > Game Paths and locate your installed games.
-3. **Customize Settings:** Adjust graphics, launcher themes, or launch arguments.
-4. **Play:** Click **Play** to start your game immediately!
+- 🎮 **Hỗ trợ đầy đủ modloader**: Vanilla, **Forge**, **NeoForge**, **Fabric**
+- 🔐 Đăng nhập Microsoft (device code – an toàn), Ely.by và Offline
+- 🌐 Giao diện **đa ngôn ngữ** (Tiếng Việt / English)
+- 🧩 Quản lý mods dễ dàng (bật/tắt bằng công tắc, mở thư mục mods)
+- 🎨 Hỗ trợ Resource Packs
+- 💾 Điều chỉnh RAM tự động đề xuất theo phiên bản
+- ☕ Tự động kiểm tra & tải Java tương thích (kể cả Java 8 cho Forge cũ)
+- 🚀 Mirror tải xuống thông minh (tự chuyển khi Mojang chậm/lỗi)
+- 🌐 Hỗ trợ Proxy
+- 🔄 Tự động cập nhật launcher
+- 💻 Hỗ trợ Windows (chính thức) + thử nghiệm Linux
 
 ---
 
-## 🛠️ Building N0Launcher from Source
+## 📥 Tải N0Launcher (Download)
 
-If you want to contribute or build **N0Launcher** locally, follow these commands:
+**Cách nhanh nhất:**
+
+1. Vào trang [**Releases**](https://github.com/panadorado/N0Launcher/releases)
+2. Tải file **N0Launcher Setup** phiên bản mới nhất (`.exe`)
+3. Chạy installer → Mở launcher → Đăng nhập → Tạo cấu hình → Chơi!
+
+> Khuyến nghị dùng bản **Setup** để cài đặt sạch sẽ.
+
+---
+
+## 🖼️ Giao diện N0Launcher
+
+*(Thêm ảnh screenshot thật của bạn vào đây để tăng tỷ lệ click & SEO)*
+
+| Đăng nhập | Giao diện chính | Quản lý Mods |
+|-----------|------------------|--------------|
+| ![Login](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-1.png) | ![Main](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-2.png) | ![Mods](https://github.com/panadorado/n0launcher-blog/blob/main/assets%2Fslider%2Fslider-3.png) |
+
+---
+
+## 🛠️ Cài đặt từ mã nguồn (Build from source)
 
 ```bash
-# Clone the repository
-git clone [https://github.com/panadorado/N0Launcher.git](https://github.com/panadorado/N0Launcher.git)
-
-# Navigate into the directory
+# Clone repo
+git clone https://github.com/panadorado/N0Launcher.git
 cd N0Launcher
 
-# Install dependencies (Example for Node/Python/C# - adjust as needed)
+# Cài đặt dependencies
 npm install
 
-# Run the app in development mode
+# Chạy chế độ development
 npm start
+
+# Build production (Windows)
+npm run build
