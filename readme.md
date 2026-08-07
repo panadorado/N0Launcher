@@ -108,4 +108,3 @@ N0Launcher được phát triển bởi **một cá nhân**, vẫn đang trong q
 
 **N0Launcher** – Minecraft Launcher tối giản dành cho người chơi Việt Nam.  
 Made with ❤️ by [panadorado](https://github.com/panadorado)
-```
