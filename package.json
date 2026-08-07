@@ -7,18 +7,15 @@
   "main": "dist/main/index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "npm run build && npm run obfuscate && electron .",
-    "dev:mon": "npm run build && npm run obfuscate && nodemon --exec electron .",
+    "start": "npm run build && electron .",
+    "dev:mon": "npm run build && nodemon --exec electron .",
     "build": "vite build && node scripts/build-main.js",
-    "obfuscate": "node scripts/obfuscate.js",
-    "pack": "npm run build && npm run obfuscate && electron-builder",
-    "pack:win": "npm run build && npm run obfuscate && electron-builder --win",
-    "encode": "npm run build && npm run obfuscate"
+    "pack": "npm run build && electron-builder",
+    "pack:win": "npm run build && electron-builder --win",
   },
   "devDependencies": {
     "electron": "^43.1.1",
     "electron-builder": "^26.15.3",
-    "javascript-obfuscator": "^5.5.0",
     "vite": "^8.1.1"
   },
   "dependencies": {
